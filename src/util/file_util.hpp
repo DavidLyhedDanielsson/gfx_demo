@@ -6,5 +6,5 @@
 
 namespace FileUtil
 {
-    std::optional<std::vector<char>> readFile(const std::filesystem::path& path);
+std::optional<std::vector<char>> readFile(const std::filesystem::path& path);
 }
