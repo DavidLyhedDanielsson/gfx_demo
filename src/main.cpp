@@ -9,6 +9,7 @@
 #include <asset/io_job.hpp>
 
 #include <graphics/dx12/demos/ndc_triangle.hpp>
+#include <graphics/dx12/demos/vertex_triangle.hpp>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_syswm.h>
@@ -63,7 +64,8 @@ int main(int argc, char** argv)
     SDL_VERSION(&wmInfo.version)
     SDL_GetWindowWMInfo(sdlWindow, &wmInfo);
 
-    DX12Demo::NDCTriangle::init(wmInfo.info.win.window, 1280, 720);
+    // DX12Demo::NDCTriangle::init(wmInfo.info.win.window, 1280, 720);
+    DX12Demo::VertexTriangle::init(wmInfo.info.win.window, 1280, 720);
 
     bool running = true;
     while(running)
@@ -81,7 +83,7 @@ int main(int argc, char** argv)
         if(!running)
             break;
 
-        DX12Demo::NDCTriangle::render(windowWidth, windowHeight);
+        DX12Demo::VertexTriangle::render(windowWidth, windowHeight);
     }
 
     loader.stopRunning();
