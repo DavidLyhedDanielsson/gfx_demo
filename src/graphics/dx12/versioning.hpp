@@ -33,3 +33,30 @@ CREATE_BASE(ID3D12PipelineState);
 
 #undef CREATE_DEFAULT
 #undef CREATE_VERSION
+
+// Not really related to versioning but common utils
+// https://stackoverflow.com/questions/47458206/pass-pointer-to-temporary-in-c-11
+template<typename T>
+const T* as_lvalue(const T&& val)
+{
+    return &val;
+}
+
+#ifdef Die
+    #error Die already defined
+#endif
+#define Die(x)                                                                 \
+    {                                                                          \
+        HRESULT hRes = (x);                                                    \
+        if(FAILED(hRes))                                                       \
+        {                                                                      \
+            _com_error err(hRes);                                              \
+            std::cerr << "DIRECTX ERROR: " << err.ErrorMessage() << std::endl; \
+            assert(false);                                                     \
+        }                                                                      \
+    }
+
+#ifdef Out
+    #error Out already defined
+#endif
+#define Out(X) IID_PPV_ARGS(X.GetAddressOf())

@@ -63,7 +63,7 @@ int main(int argc, char** argv)
     SDL_VERSION(&wmInfo.version)
     SDL_GetWindowWMInfo(sdlWindow, &wmInfo);
 
-    DX12::init(wmInfo.info.win.window, 1280, 720);
+    DX12Demo::NDCTriangle::init(wmInfo.info.win.window, 1280, 720);
 
     bool running = true;
     while(running)
@@ -81,7 +81,7 @@ int main(int argc, char** argv)
         if(!running)
             break;
 
-        DX12::render(windowWidth, windowHeight);
+        DX12Demo::NDCTriangle::render(windowWidth, windowHeight);
     }
 
     loader.stopRunning();

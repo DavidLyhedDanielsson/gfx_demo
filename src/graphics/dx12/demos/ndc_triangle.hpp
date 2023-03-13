@@ -5,7 +5,9 @@
 #include <array>
 #include <cstdint>
 
-namespace DX12
+namespace DX12Demo
+{
+namespace NDCTriangle
 {
     constexpr uint32_t BACKBUFFER_COUNT = 3;
     constexpr DXGI_FORMAT BACKBUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -61,4 +63,5 @@ namespace DX12
 
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight);
     void render(uint32_t windowWidth, uint32_t windowHeight);
+}
 }

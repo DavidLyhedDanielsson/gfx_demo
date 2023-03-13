@@ -18,33 +18,16 @@
 #include <asset/path.hpp>
 #include <util/file_util.hpp>
 
-DX12::State state;
+static DX12Demo::NDCTriangle::State state;
 
-// https://stackoverflow.com/questions/47458206/pass-pointer-to-temporary-in-c-11
-template<typename T>
-const T* as_lvalue(const T&& val)
+namespace DX12Demo
 {
-    return &val;
-}
-
-#define Die(x)                                                                 \
-    {                                                                          \
-        HRESULT hRes = (x);                                                    \
-        if(FAILED(hRes))                                                       \
-        {                                                                      \
-            _com_error err(hRes);                                              \
-            std::cerr << "DIRECTX ERROR: " << err.ErrorMessage() << std::endl; \
-            assert(false);                                                     \
-        }                                                                      \
-    }
-
-#define Out(X) IID_PPV_ARGS(X.GetAddressOf())
-
-namespace DX12
+namespace NDCTriangle
 {
+
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {
-        DX12::State state{};
+        State state{};
 
         IDXGIFactoryS dxgiFactory;
 
@@ -320,4 +303,5 @@ namespace DX12
             WaitForSingleObject(state.sync.fenceEventHandle, INFINITE);
         }
     }
+}
 }
