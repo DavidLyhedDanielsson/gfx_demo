@@ -9,7 +9,8 @@ set(SHADER_PS
 
 set(SHADER_VS
     "ndc_triangle"
-    "vertex_triangle"
+    "vertex_triangle_ia"
+    "vertex_triangle_pull"
 )
 
 add_custom_command(
@@ -68,7 +69,8 @@ set(SRC_DX
     blend_state.hpp
     versioning.hpp
     demos/ndc_triangle.cpp demos/ndc_triangle.hpp
-    demos/vertex_triangle.cpp demos/vertex_triangle.hpp
+    demos/vertex_triangle_ia.cpp demos/vertex_triangle_ia.hpp
+    demos/vertex_triangle_pull.cpp demos/vertex_triangle_pull.hpp
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 

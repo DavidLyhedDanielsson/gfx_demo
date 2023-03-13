@@ -1,4 +1,4 @@
-#include "vertex_triangle.hpp"
+#include "vertex_triangle_pull.hpp"
 
 #include <array>
 #include <cstring>
@@ -20,11 +20,11 @@
 #include <asset/path.hpp>
 #include <util/file_util.hpp>
 
-static DX12Demo::VertexTriangle::State state;
+static DX12Demo::VertexTrianglePull::State state;
 
 namespace DX12Demo
 {
-namespace VertexTriangle
+namespace VertexTrianglePull
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {
@@ -247,17 +247,26 @@ namespace VertexTriangle
         {
             ID3DBlobS serialized;
             ID3DBlobS error;
-            D3D12_VERSIONED_ROOT_SIGNATURE_DESC a;
+            std::array rootParameters = std::to_array({D3D12_ROOT_PARAMETER{
+                .ParameterType = D3D12_ROOT_PARAMETER_TYPE_SRV,
+                .Descriptor =
+                    D3D12_ROOT_DESCRIPTOR{
+                        .ShaderRegister = 0,
+                        .RegisterSpace = 0,
+                    },
+                .ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX,
+            }});
+
             Die(D3D12SerializeVersionedRootSignature(
                 as_lvalue(D3D12_VERSIONED_ROOT_SIGNATURE_DESC{
                     .Version = D3D_ROOT_SIGNATURE_VERSION_1,
                     .Desc_1_0 =
                         D3D12_ROOT_SIGNATURE_DESC{
-                            .NumParameters = 0,
-                            .pParameters = nullptr,
+                            .NumParameters = rootParameters.size(),
+                            .pParameters = rootParameters.data(),
                             .NumStaticSamplers = 0,
                             .pStaticSamplers = nullptr,
-                            .Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT,
+                            .Flags = D3D12_ROOT_SIGNATURE_FLAG_NONE,
                         },
                 }),
                 serialized.GetAddressOf(),
@@ -271,7 +280,8 @@ namespace VertexTriangle
         }
 
         {
-            std::vector vertexShaderCode = FileUtil::readFile(Path::getShaderPath("vs/vertex_triangle.bin")).value();
+            std::vector vertexShaderCode =
+                FileUtil::readFile(Path::getShaderPath("vs/vertex_triangle_pull.bin")).value();
             Die(D3DCreateBlob(vertexShaderCode.size(), state.shaders.vertexBlob.GetAddressOf()));
             std::memcpy(state.shaders.vertexBlob->GetBufferPointer(), vertexShaderCode.data(), vertexShaderCode.size());
         }
@@ -283,18 +293,6 @@ namespace VertexTriangle
         }
 
         {
-            std::array inputLayout = std::to_array({
-                D3D12_INPUT_ELEMENT_DESC{
-                    .SemanticName = "POSITION",
-                    .SemanticIndex = 0,
-                    .Format = DXGI_FORMAT_R32G32_FLOAT,
-                    .InputSlot = 0,
-                    .AlignedByteOffset = 0,
-                    .InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,
-                    .InstanceDataStepRate = 0, // Mandatory
-                },
-            });
-
             Die(device->CreateGraphicsPipelineState(
                 as_lvalue(D3D12_GRAPHICS_PIPELINE_STATE_DESC{
                     .pRootSignature = state.rootSignature.Get(),
@@ -318,8 +316,8 @@ namespace VertexTriangle
                     .DepthStencilState = DepthStencilState::Disabled,
                     .InputLayout =
                         {
-                            .pInputElementDescs = inputLayout.data(),
-                            .NumElements = inputLayout.size(),
+                            .pInputElementDescs = nullptr,
+                            .NumElements = 0,
                         },
                     .IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED,
                     .PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE,
@@ -414,6 +412,7 @@ namespace VertexTriangle
                 .SizeInBytes = sizeof(vertexData),
                 .StrideInBytes = sizeof(float) * 2,
             }));
+        state.commandList->SetGraphicsRootShaderResourceView(0, state.resources.vertexBuffer->GetGPUVirtualAddress());
         state.commandList->DrawInstanced(3, 1, 0, 0);
 
         state.commandList->ResourceBarrier(

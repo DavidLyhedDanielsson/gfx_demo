@@ -7,7 +7,7 @@
 
 namespace DX12Demo
 {
-namespace VertexTriangle
+namespace VertexTrianglePull
 {
     constexpr uint32_t BACKBUFFER_COUNT = 3;
     constexpr DXGI_FORMAT BACKBUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM;
