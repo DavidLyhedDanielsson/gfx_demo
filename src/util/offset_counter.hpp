@@ -3,7 +3,6 @@
 #include <cassert>
 #include <cstdint>
 
-
 /**
  * @brief A counter which keeps track of a max value and its current value.
  *

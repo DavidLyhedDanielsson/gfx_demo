@@ -5,8 +5,8 @@
 #include <cstring>
 #include <optional>
 
-#include <stl_utils/index_iterator.h>
-#include <utils/offset_counter.hpp>
+#include <stl_util/index_iterator.hpp>
+#include <util/offset_counter.hpp>
 
 /**
  * @brief A circular buffer which lets the user control when the next sections
