@@ -26,7 +26,7 @@ function(CompileShader TYPE FILE_NAME)
             TARGET shaders
             MAIN_DEPENDENCY ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.bin
             COMMENT "Compiling ${TYPE} at ${FILE_NAME}"
-            COMMAND dxc -E main -T ${TYPE}_6_6 -Zi ${SHADER_SRC_ROOT_DIR}/${TYPE}/${FILE_NAME}.hlsl -Fo ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.bin -Fd ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.pdb
+            COMMAND dxc -E main -T ${TYPE}_6_5 -Zi ${SHADER_SRC_ROOT_DIR}/${TYPE}/${FILE_NAME}.hlsl -Fo ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.bin -Fd ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.pdb
             VERBATIM)
 endfunction(CompileShader)
 
@@ -65,8 +65,8 @@ list(TRANSFORM SRC_ASSET PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/asset/)
 
 set(SRC_DX
     blend_state.hpp
-    dx.cpp dx.hpp
     versioning.hpp
+    demos/ndc_triangle.cpp demos/ndc_triangle.hpp
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 

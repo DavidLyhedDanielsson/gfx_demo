@@ -1,4 +1,4 @@
-#include "dx.hpp"
+#include "ndc_triangle.hpp"
 
 #include <array>
 #include <iostream>
@@ -10,15 +10,13 @@
 #include <dxgi.h>
 #include <dxgi1_2.h>
 
-#include "blend_state.hpp"
-#include "depth_stencil_state.hpp"
-#include "graphics/dx12/dx.hpp"
-#include "rasterizer_state.hpp"
-#include "versioning.hpp"
+#include <graphics/dx12/blend_state.hpp>
+#include <graphics/dx12/depth_stencil_state.hpp>
+#include <graphics/dx12/rasterizer_state.hpp>
+#include <graphics/dx12/versioning.hpp>
 
 #include <asset/path.hpp>
 #include <util/file_util.hpp>
-#include <winerror.h>
 
 DX12::State state;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "versioning.hpp"
+#include <graphics/dx12/versioning.hpp>
 
 #include <array>
 #include <cstdint>

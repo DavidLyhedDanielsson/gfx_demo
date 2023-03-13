@@ -8,7 +8,7 @@
 #include <asset/asset_loader.hpp>
 #include <asset/io_job.hpp>
 
-#include <graphics/dx12/dx.hpp>
+#include <graphics/dx12/demos/ndc_triangle.hpp>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_syswm.h>
@@ -62,8 +62,6 @@ int main(int argc, char** argv)
     SDL_SysWMinfo wmInfo;
     SDL_VERSION(&wmInfo.version)
     SDL_GetWindowWMInfo(sdlWindow, &wmInfo);
-
-    uint32_t currentBackBuffer = 0;
 
     DX12::init(wmInfo.info.win.window, 1280, 720);
 
