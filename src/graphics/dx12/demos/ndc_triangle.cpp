@@ -140,7 +140,6 @@ namespace NDCTriangle
         {
             ID3DBlobS serialized;
             ID3DBlobS error;
-            D3D12_VERSIONED_ROOT_SIGNATURE_DESC a;
             Die(D3D12SerializeVersionedRootSignature(
                 as_lvalue(D3D12_VERSIONED_ROOT_SIGNATURE_DESC{
                     .Version = D3D_ROOT_SIGNATURE_VERSION_1,

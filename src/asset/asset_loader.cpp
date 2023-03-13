@@ -9,8 +9,6 @@
 #include <string>
 #include <variant>
 
-#include <stl_util/functional.hpp>
-
 static thread_local bool suspend = false;
 static thread_local std::optional<Loader> currentLoader;
 
