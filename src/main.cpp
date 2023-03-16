@@ -9,6 +9,7 @@
 #include <asset/io_job.hpp>
 
 #include <graphics/dx12/demos/ndc_triangle.hpp>
+#include <graphics/dx12/demos/spinning_triangle.hpp>
 #include <graphics/dx12/demos/vertex_triangle_ia.hpp>
 #include <graphics/dx12/demos/vertex_triangle_pull.hpp>
 
@@ -67,7 +68,8 @@ int main(int argc, char** argv)
 
     // DX12Demo::NDCTriangle::init(wmInfo.info.win.window, 1280, 720);
     // DX12Demo::VertexTriangleIA::init(wmInfo.info.win.window, 1280, 720);
-    DX12Demo::VertexTrianglePull::init(wmInfo.info.win.window, 1280, 720);
+    // DX12Demo::VertexTrianglePull::init(wmInfo.info.win.window, 1280, 720);
+    DX12Demo::SpinningTriangle::init(wmInfo.info.win.window, 1280, 720);
 
     bool running = true;
     while(running)
@@ -85,7 +87,7 @@ int main(int argc, char** argv)
         if(!running)
             break;
 
-        DX12Demo::VertexTrianglePull::render(windowWidth, windowHeight);
+        DX12Demo::SpinningTriangle::render(windowWidth, windowHeight);
     }
 
     loader.stopRunning();
