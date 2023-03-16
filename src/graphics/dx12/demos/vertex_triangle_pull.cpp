@@ -245,8 +245,6 @@ namespace VertexTrianglePull
         }
 
         {
-            ID3DBlobS serialized;
-            ID3DBlobS error;
             std::array rootParameters = std::to_array({D3D12_ROOT_PARAMETER{
                 .ParameterType = D3D12_ROOT_PARAMETER_TYPE_SRV,
                 .Descriptor =
@@ -257,6 +255,8 @@ namespace VertexTrianglePull
                 .ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX,
             }});
 
+            ID3DBlobS serialized;
+            ID3DBlobS error;
             Die(D3D12SerializeVersionedRootSignature(
                 as_lvalue(D3D12_VERSIONED_ROOT_SIGNATURE_DESC{
                     .Version = D3D_ROOT_SIGNATURE_VERSION_1,
