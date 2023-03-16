@@ -73,6 +73,7 @@ set(SRC_DX
     demos/vertex_triangle_ia.cpp demos/vertex_triangle_ia.hpp
     demos/vertex_triangle_pull.cpp demos/vertex_triangle_pull.hpp
     demos/spinning_triangle.cpp demos/spinning_triangle.hpp
+    demos/spinning_quad.cpp demos/spinning_quad.hpp
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
