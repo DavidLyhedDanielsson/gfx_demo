@@ -28,7 +28,7 @@ function(CompileShader TYPE FILE_NAME)
             TARGET shaders
             MAIN_DEPENDENCY ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.bin
             COMMENT "Compiling ${TYPE} at ${FILE_NAME}"
-            COMMAND dxc -E main -T ${TYPE}_6_5 -Zi ${SHADER_SRC_ROOT_DIR}/${TYPE}/${FILE_NAME}.hlsl -Fo ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.bin -Fd ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.pdb
+            COMMAND dxc -O0 -E main -T ${TYPE}_6_5 -Zi ${SHADER_SRC_ROOT_DIR}/${TYPE}/${FILE_NAME}.hlsl -Fo ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.bin -Fd ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.pdb
             VERBATIM)
 endfunction(CompileShader)
 
