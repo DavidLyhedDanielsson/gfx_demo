@@ -5,6 +5,7 @@ set(SHADER_OUTPUT_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders)
 
 set(SHADER_PS
     "white"
+    "spinning_cat"
 )
 
 set(SHADER_VS
@@ -12,6 +13,7 @@ set(SHADER_VS
     "vertex_triangle_ia"
     "vertex_triangle_pull"
     "vertex_triangle_spinning"
+    "spinning_cat"
 )
 
 add_custom_command(
@@ -74,6 +76,7 @@ set(SRC_DX
     demos/vertex_triangle_pull.cpp demos/vertex_triangle_pull.hpp
     demos/spinning_triangle.cpp demos/spinning_triangle.hpp
     demos/spinning_quad.cpp demos/spinning_quad.hpp
+    demos/spinning_cat.cpp demos/spinning_cat.hpp
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 

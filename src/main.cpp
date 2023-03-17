@@ -9,6 +9,7 @@
 #include <asset/io_job.hpp>
 
 #include <graphics/dx12/demos/ndc_triangle.hpp>
+#include <graphics/dx12/demos/spinning_cat.hpp>
 #include <graphics/dx12/demos/spinning_quad.hpp>
 #include <graphics/dx12/demos/spinning_triangle.hpp>
 #include <graphics/dx12/demos/vertex_triangle_ia.hpp>
@@ -16,12 +17,6 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_syswm.h>
-
-#define STB_IMAGE_IMPLEMENTATION
-#ifdef _WIN32
-    #define STBI_WINDOWS_UTF8
-#endif
-#include <stb_image.h>
 
 struct Texture
 {
@@ -32,23 +27,6 @@ int main(int argc, char** argv)
 {
     AssetLoader loader;
     loader.registerLoader<Texture>(+[](AssetLoader& loader, const std::filesystem::path& path) -> Loader {
-        int width;
-        int height;
-        int channels;
-
-#ifdef _WIN32
-        char stbiBuf[512];
-        stbi_convert_wchar_to_utf8(stbiBuf, sizeof(stbiBuf), path.c_str());
-
-        auto stbiData = std::unique_ptr<stbi_uc, void (*)(void*)>(
-            stbi_load(stbiBuf, &width, &height, &channels, STBI_rgb_alpha),
-            stbi_image_free);
-#else
-        auto stbiData = std::unique_ptr<stbi_uc, void (*)(void*)>(
-            stbi_load(this->path.c_str(), &width, &height, &channels, STBI_rgb_alpha),
-            stbi_image_free);
-#endif
-
         // TODO
     });
 
@@ -71,7 +49,8 @@ int main(int argc, char** argv)
     // DX12Demo::VertexTriangleIA::init(wmInfo.info.win.window, 1280, 720);
     // DX12Demo::VertexTrianglePull::init(wmInfo.info.win.window, 1280, 720);
     // DX12Demo::SpinningTriangle::init(wmInfo.info.win.window, 1280, 720);
-    DX12Demo::SpinningQuad::init(wmInfo.info.win.window, 1280, 720);
+    // DX12Demo::SpinningQuad::init(wmInfo.info.win.window, 1280, 720);
+    DX12Demo::SpinningCat::init(wmInfo.info.win.window, 1280, 720);
 
     bool running = true;
     while(running)
@@ -89,7 +68,7 @@ int main(int argc, char** argv)
         if(!running)
             break;
 
-        DX12Demo::SpinningQuad::render(windowWidth, windowHeight);
+        DX12Demo::SpinningCat::render(windowWidth, windowHeight);
     }
 
     loader.stopRunning();

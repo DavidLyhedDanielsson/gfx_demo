@@ -12,6 +12,11 @@ set(ROOT_DIR_SHADERS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders)
 set(ROOT_DIR_ASSETS_STR "\"${CMAKE_CURRENT_SOURCE_DIR}/data\"")
 set(ROOT_DIR_SHADERS_STR "\"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders\"")
 
+# Why why why why why why why why
+if(WIN32)
+    add_compile_definitions(-DNOMINMAX -DSTBI_NO_SIMD)
+endif()
+
 # Runtime
 find_package(SDL2 CONFIG REQUIRED)
 find_package(assimp CONFIG REQUIRED)
