@@ -250,7 +250,6 @@ namespace NDCTriangle
                 .bottom = (LONG)windowHeight,
             }));
 
-        // Implicit?
         state.commandList->ResourceBarrier(
             1,
             as_lvalue(D3D12_RESOURCE_BARRIER{
