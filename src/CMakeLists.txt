@@ -80,24 +80,24 @@ set(SRC_DX
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
-add_executable(heath
+add_executable(gfx_demo
     ${SRC_UTIL}
     ${SRC_ASSET}
     ${SRC_DX}
     main.cpp
 )
-add_dependencies(heath
+add_dependencies(gfx_demo
     shaders
 )
 
-target_compile_definitions(heath PRIVATE
+target_compile_definitions(gfx_demo PRIVATE
     ROOT_DIR_ASSETS=${ROOT_DIR_ASSETS_STR}
     ROOT_DIR_SHADERS=${ROOT_DIR_SHADERS_STR}
 )
-target_include_directories(heath PRIVATE
+target_include_directories(gfx_demo PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
-target_link_libraries(heath PRIVATE
+target_link_libraries(gfx_demo PRIVATE
     SDL2::SDL2 SDL2::SDL2main
     EnTT::EnTT
     ${ASSIMP_LIBRARIES}
