@@ -399,7 +399,7 @@ namespace VertexTrianglePull
         auto backBufferHandle = state.heaps.rtv->GetCPUDescriptorHandleForHeapStart();
         backBufferHandle.ptr += state.descriptorSizes.rtv * currentFrame;
 
-        float clearColor[4] = {1.0f, 0.0f, 0.0f, 1.0f};
+        float clearColor[4] = {69.0f / 255.0f, 133.0f / 255.0f, 136.0f / 255.0f, 1.0f};
         state.commandList->ClearRenderTargetView(backBufferHandle, clearColor, 0, nullptr);
         state.commandList->OMSetRenderTargets(1, &backBufferHandle, true, nullptr);
         state.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
