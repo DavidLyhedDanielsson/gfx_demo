@@ -214,19 +214,20 @@ namespace SpinningTriangle
             std::memcpy((char*)uploadBufferDataPointer + 256, &transform, sizeof(transform));
             state.resources.uploadBuffer->Unmap(0, nullptr);
 
-            state.commandList->ResourceBarrier(
-                1,
-                as_lvalue(D3D12_RESOURCE_BARRIER{
-                    .Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
-                    .Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE,
-                    .Transition =
-                        {
-                            .pResource = state.resources.vertexBuffer.Get(),
-                            .Subresource = 0,
-                            .StateBefore = D3D12_RESOURCE_STATE_COMMON,
-                            .StateAfter = D3D12_RESOURCE_STATE_COPY_DEST,
-                        },
-                }));
+            // Note: the following promotion happens here
+            // state.commandList->ResourceBarrier(
+            //     1,
+            //     as_lvalue(D3D12_RESOURCE_BARRIER{
+            //         .Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+            //         .Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE,
+            //         .Transition =
+            //             {
+            //                 .pResource = state.resources.vertexBuffer.Get(),
+            //                 .Subresource = 0,
+            //                 .StateBefore = D3D12_RESOURCE_STATE_COMMON,
+            //                 .StateAfter = D3D12_RESOURCE_STATE_COPY_DEST,
+            //             },
+            //     }));
 
             state.commandList->CopyBufferRegion(
                 state.resources.vertexBuffer.Get(),
@@ -235,19 +236,21 @@ namespace SpinningTriangle
                 0,
                 sizeof(vertexData));
 
-            state.commandList->ResourceBarrier(
-                1,
-                as_lvalue(D3D12_RESOURCE_BARRIER{
-                    .Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
-                    .Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE,
-                    .Transition =
-                        {
-                            .pResource = state.resources.vertexBuffer.Get(),
-                            .Subresource = 0,
-                            .StateBefore = D3D12_RESOURCE_STATE_COPY_DEST,
-                            .StateAfter = D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
-                        },
-                }));
+            // Note: not required since it will decay when the command list has
+            // executed
+            // state.commandList->ResourceBarrier(
+            //     1,
+            //     as_lvalue(D3D12_RESOURCE_BARRIER{
+            //         .Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+            //         .Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE,
+            //         .Transition =
+            //             {
+            //                 .pResource = state.resources.vertexBuffer.Get(),
+            //                 .Subresource = 0,
+            //                 .StateBefore = D3D12_RESOURCE_STATE_COPY_DEST,
+            //                 .StateAfter = D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
+            //             },
+            //     }));
         }
 
         {

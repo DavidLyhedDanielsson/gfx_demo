@@ -436,6 +436,7 @@ namespace SpinningCat
                         }}),
                 nullptr);
 
+            // Note: resource has been promoted into COPY_DEST
             state.commandList->ResourceBarrier(
                 1,
                 as_lvalue(D3D12_RESOURCE_BARRIER{
@@ -449,21 +450,6 @@ namespace SpinningCat
                             .StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
                         },
                 }));
-
-            // TODO: Implicit transition ?
-            // state.commandList->ResourceBarrier(
-            //     1,
-            //     as_lvalue(D3D12_RESOURCE_BARRIER{
-            //         .Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
-            //         .Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE,
-            //         .Transition =
-            //             {
-            //                 .pResource = state.resources.vertexBuffer.Get(),
-            //                 .Subresource = 0,
-            //                 .StateBefore = D3D12_RESOURCE_STATE_COPY_DEST,
-            //                 .StateAfter = D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
-            //             },
-            //     }));
         }
 
         {
