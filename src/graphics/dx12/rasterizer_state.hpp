@@ -6,8 +6,8 @@ struct RasterizerState
 {
     static constexpr D3D12_RASTERIZER_DESC Normal{
         .FillMode = D3D12_FILL_MODE_SOLID,
-        .CullMode = D3D12_CULL_MODE_NONE,
-        .FrontCounterClockwise = false,
+        .CullMode = D3D12_CULL_MODE_BACK,
+        .FrontCounterClockwise = true,
         .DepthBias = 0,
         .DepthBiasClamp = 0.0f,
         .SlopeScaledDepthBias = 0.0f,
