@@ -1,9 +1,9 @@
 #pragma once
 
-#include <graphics/dx12/versioning.hpp>
-
 #include <array>
 #include <cstdint>
+
+#include <graphics/dx12/versioning.hpp>
 
 namespace DX12Demo
 {

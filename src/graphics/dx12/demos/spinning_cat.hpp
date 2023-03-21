@@ -1,10 +1,11 @@
 #pragma once
 
-#include <SimpleMath.h>
-#include <graphics/dx12/versioning.hpp>
-
 #include <array>
 #include <cstdint>
+
+#include <graphics/dx12/versioning.hpp>
+
+#include <SimpleMath.h>
 
 namespace DX12Demo
 {

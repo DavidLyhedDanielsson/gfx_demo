@@ -159,7 +159,7 @@ namespace PerspectiveCat
             auto catPath = Path::getRandomCat();
 
             // Immediately invoked function expressions (IIFE)
-            const auto stbiData = ([&]() {
+            const auto stbiData = [&]() {
                 // This scope prevents usage of `width`, `height`, and `channels`
                 int width;
                 int height;
@@ -183,7 +183,7 @@ namespace PerspectiveCat
                 assert(height == TEXTURE_HEIGHT);
 
                 return stbiData;
-            })();
+            }();
 
             textureRowPitch = AlignTo(TEXTURE_WIDTH * 4, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
 
