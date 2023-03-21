@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cstdlib>
 #include <filesystem>
 #include <future>
 #include <iostream>
@@ -21,6 +22,8 @@ struct Texture
 
 int main(int argc, char** argv)
 {
+    std::srand(time(NULL));
+
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
         return 1;
 

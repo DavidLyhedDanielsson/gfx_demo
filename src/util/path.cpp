@@ -21,4 +21,12 @@ std::filesystem::path getShaderPath(const std::filesystem::path& name)
 {
     return getShaderPath() / name;
 }
+
+std::filesystem::path getRandomCat()
+{
+    char path[] = "catX.jpg";
+    path[3] = '0' + (char)(rand() % 4);
+
+    return getAssetPath(path);
+}
 };

@@ -155,8 +155,7 @@ namespace SpinningCat
         uint32_t textureHeight;
         std::vector<char> textureData;
         {
-            // https://placekitten.com/attribution.html
-            auto catPath = Path::getAssetPath("512.jpg");
+            auto catPath = Path::getRandomCat();
 
             int width;
             int height;
