@@ -15,8 +15,7 @@ Output main(Input input) {
   Output output;
   output.uv = input.uv;
 
-  float2 finalPosition =
-      mul(float4(input.position, 0.0f, 0.0f), transpose(transform)).xy;
+  float2 finalPosition = mul(float4(input.position, 0.0f, 0.0f), transform).xy;
   output.finalPosition = float4(finalPosition.xy, 0.0f, 1.0f);
 
   return output;

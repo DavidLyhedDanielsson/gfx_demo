@@ -359,7 +359,8 @@ namespace SpinningCat
                 indexData.data(),
                 sizeof(indexData));
 
-            DirectX::SimpleMath::Matrix transform = DirectX::SimpleMath::Matrix::CreateRotationZ(DirectX::XM_PIDIV2);
+            // Note the transpose!
+            DirectX::SimpleMath::Matrix transform = DirectX::SimpleMath::Matrix::CreateRotationZ(0).Transpose();
             std::memcpy(
                 (char*)uploadBufferDataPointer + state.constants.UPLOAD_CBV_OFFSET,
                 &transform,
@@ -655,7 +656,7 @@ namespace SpinningCat
 
         void* uploadBufferDataPointer;
         state.resources.uploadBuffer->Map(0, nullptr, &uploadBufferDataPointer);
-        DirectX::SimpleMath::Matrix transform = DirectX::SimpleMath::Matrix::CreateRotationZ(time);
+        DirectX::SimpleMath::Matrix transform = DirectX::SimpleMath::Matrix::CreateRotationZ(time).Transpose();
         std::memcpy((char*)uploadBufferDataPointer + state.constants.UPLOAD_CBV_OFFSET, &transform, sizeof(transform));
         state.resources.uploadBuffer->Unmap(0, nullptr);
 
