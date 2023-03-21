@@ -15,6 +15,7 @@ set(SHADER_VS
     "vertex_triangle_spinning"
     "spinning_cat"
     "perspective_cat"
+    "cubed_cat"
 )
 
 add_custom_command(
@@ -69,6 +70,7 @@ set(SRC_DX
     demos/spinning_quad.cpp demos/spinning_quad.hpp
     demos/spinning_cat.cpp demos/spinning_cat.hpp
     demos/perspective_cat.cpp demos/perspective_cat.hpp
+    demos/cubed_cat.cpp demos/cubed_cat.hpp
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 

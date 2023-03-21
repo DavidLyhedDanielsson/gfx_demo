@@ -5,6 +5,7 @@
 #include <iostream>
 #include <thread>
 
+#include <graphics/dx12/demos/cubed_cat.hpp>
 #include <graphics/dx12/demos/ndc_triangle.hpp>
 #include <graphics/dx12/demos/perspective_cat.hpp>
 #include <graphics/dx12/demos/spinning_cat.hpp>
@@ -44,7 +45,8 @@ int main(int argc, char** argv)
     // DX12Demo::SpinningTriangle::init(wmInfo.info.win.window, 1280, 720);
     // DX12Demo::SpinningQuad::init(wmInfo.info.win.window, 1280, 720);
     // DX12Demo::SpinningCat::init(wmInfo.info.win.window, 1280, 720);
-    DX12Demo::PerspectiveCat::init(wmInfo.info.win.window, 1280, 720);
+    // DX12Demo::PerspectiveCat::init(wmInfo.info.win.window, 1280, 720);
+    DX12Demo::CubedCat::init(wmInfo.info.win.window, 1280, 720);
 
     bool running = true;
     while(running)
@@ -62,7 +64,7 @@ int main(int argc, char** argv)
         if(!running)
             break;
 
-        DX12Demo::PerspectiveCat::render(windowWidth, windowHeight);
+        DX12Demo::CubedCat::render(windowWidth, windowHeight);
     }
 
     return 0;
