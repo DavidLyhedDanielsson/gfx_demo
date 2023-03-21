@@ -54,6 +54,7 @@ endforeach()
 set(SRC_UTIL
     file_util.cpp file_util.hpp
     path.cpp path.hpp
+    stbi.cpp stbi.hpp
 )
 list(TRANSFORM SRC_UTIL PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/util/)
 

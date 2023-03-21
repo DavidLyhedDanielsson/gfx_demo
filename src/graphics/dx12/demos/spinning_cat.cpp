@@ -22,12 +22,7 @@
 
 #include <util/file_util.hpp>
 #include <util/path.hpp>
-
-#define STB_IMAGE_IMPLEMENTATION
-#ifdef _WIN32
-    #define STBI_WINDOWS_UTF8
-#endif
-#include <stb_image.h>
+#include <util/stbi.hpp>
 
 static DX12Demo::SpinningCat::State state;
 
