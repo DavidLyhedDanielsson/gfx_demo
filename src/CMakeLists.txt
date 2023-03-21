@@ -74,26 +74,38 @@ set(SRC_DX
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
-add_executable(gfx_demo
-    ${SRC_UTIL}
-    ${SRC_DX}
-    main.cpp
-)
-add_dependencies(gfx_demo
-    shaders
-)
+function(create_demo EXECUTABLE_NAME DEFINE)
+    add_executable(${EXECUTABLE_NAME}
+        ${SRC_UTIL}
+        ${SRC_DX}
+        main.cpp
+    )
+    add_dependencies(${EXECUTABLE_NAME}
+        shaders
+    )
 
-target_compile_definitions(gfx_demo PRIVATE
-    ROOT_DIR_ASSETS=${ROOT_DIR_ASSETS_STR}
-    ROOT_DIR_SHADERS=${ROOT_DIR_SHADERS_STR}
-)
-target_include_directories(gfx_demo PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
-target_link_libraries(gfx_demo PRIVATE
-    SDL2::SDL2 SDL2::SDL2main
-    EnTT::EnTT
-    ${ASSIMP_LIBRARIES}
-    d3d12.lib dxgi.lib d3dcompiler.lib
-    Microsoft::DirectX-Guids Microsoft::DirectX-Headers Microsoft::DirectXTK12
-)
+    target_compile_definitions(${EXECUTABLE_NAME} PRIVATE
+        ROOT_DIR_ASSETS=${ROOT_DIR_ASSETS_STR}
+        ROOT_DIR_SHADERS=${ROOT_DIR_SHADERS_STR}
+        ${DEFINE}
+    )
+    target_include_directories(${EXECUTABLE_NAME} PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+    target_link_libraries(${EXECUTABLE_NAME} PRIVATE
+        SDL2::SDL2 SDL2::SDL2main
+        EnTT::EnTT
+        ${ASSIMP_LIBRARIES}
+        d3d12.lib dxgi.lib d3dcompiler.lib
+        Microsoft::DirectX-Guids Microsoft::DirectX-Headers Microsoft::DirectXTK12
+    )
+endfunction()
+
+create_demo(ndc_triangle DEMO_NDC_TRIANGLE)
+create_demo(vertex_triangle_ia DEMO_VERTEX_TRIANGLE_IA)
+create_demo(vertex_triangle_pull DEMO_VERTEX_TRIANGLE_PULL)
+create_demo(spinning_triangle DEMO_SPINNING_TRIANGLE)
+create_demo(spinning_quad DEMO_SPINNING_QUAD)
+create_demo(spinning_cat DEMO_SPINNING_CAT)
+create_demo(perspective_cat DEMO_PERSPECTIVE_CAT)
+create_demo(cubed_cat DEMO_CUBED_CAT)
