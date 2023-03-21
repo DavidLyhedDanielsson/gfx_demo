@@ -17,8 +17,8 @@ using Microsoft::WRL::ComPtr;
 CREATE_BASE(IDXGIAdapter);
 CREATE_VERSION(IDXGIFactory, 6); // EnumAdapterByGpuPreference
 CREATE_VERSION(IDXGISwapChain, 3); // CreateSwapChainForHwnd, GetCurrentBackBufferIndex
+CREATE_VERSION(ID3D12Debug, 1); // SetEnableGPUBasedValidation
 
-CREATE_BASE(ID3D12Debug);
 CREATE_BASE(ID3D12Device);
 CREATE_BASE(ID3D12InfoQueue);
 CREATE_BASE(ID3D12Fence);
