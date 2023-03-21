@@ -20,8 +20,8 @@
 #include <graphics/dx12/rasterizer_state.hpp>
 #include <graphics/dx12/versioning.hpp>
 
-#include <asset/path.hpp>
 #include <util/file_util.hpp>
+#include <util/path.hpp>
 
 #define STB_IMAGE_IMPLEMENTATION
 #ifdef _WIN32
@@ -611,8 +611,6 @@ namespace SpinningCat
 
         ::state = std::move(state);
     }
-
-    void registerLoader(AssetLoader& loader) {}
 
     float time = 0.0f;
 

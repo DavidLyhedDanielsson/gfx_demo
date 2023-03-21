@@ -6,8 +6,6 @@
 #include <array>
 #include <cstdint>
 
-#include <asset/asset_loader.hpp>
-
 namespace DX12Demo
 {
 namespace SpinningCat
@@ -105,7 +103,6 @@ namespace SpinningCat
     };
 
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight);
-    void registerLoader(AssetLoader& loader);
     void render(uint32_t windowWidth, uint32_t windowHeight);
 }
 }

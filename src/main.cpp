@@ -4,10 +4,6 @@
 #include <iostream>
 #include <thread>
 
-#include <asset/asset.hpp>
-#include <asset/asset_loader.hpp>
-#include <asset/io_job.hpp>
-
 #include <graphics/dx12/demos/ndc_triangle.hpp>
 #include <graphics/dx12/demos/spinning_cat.hpp>
 #include <graphics/dx12/demos/spinning_quad.hpp>
@@ -25,13 +21,6 @@ struct Texture
 
 int main(int argc, char** argv)
 {
-    AssetLoader loader;
-    loader.registerLoader<Texture>(+[](AssetLoader& loader, const std::filesystem::path& path) -> Loader {
-        // TODO
-    });
-
-    // loader.load<Texture>("Something");
-
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
         return 1;
 
@@ -70,9 +59,6 @@ int main(int argc, char** argv)
 
         DX12Demo::SpinningCat::render(windowWidth, windowHeight);
     }
-
-    loader.stopRunning();
-    loader.wait();
 
     return 0;
 }

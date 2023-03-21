@@ -15,8 +15,8 @@
 #include <graphics/dx12/rasterizer_state.hpp>
 #include <graphics/dx12/versioning.hpp>
 
-#include <asset/path.hpp>
 #include <util/file_util.hpp>
+#include <util/path.hpp>
 
 static DX12Demo::NDCTriangle::State state;
 
