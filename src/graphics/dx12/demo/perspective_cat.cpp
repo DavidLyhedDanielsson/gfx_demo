@@ -381,7 +381,7 @@ namespace PerspectiveCat
                 (SimpleMath::Matrix::CreateLookAt(CAMERA_POSITION, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f})
                  * SimpleMath::Matrix::CreatePerspectiveFieldOfView(
                      DirectX::XMConvertToRadians(59.0f), // 59.0f = 90 deg horizontal FoV at 16:9
-                     16.0f / 9.0f,
+                     windowWidth / (float)windowHeight,
                      0.1f,
                      2.0f))
                     .Transpose();

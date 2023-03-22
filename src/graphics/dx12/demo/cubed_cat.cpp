@@ -389,9 +389,9 @@ namespace CubedCat
                 (SimpleMath::Matrix::CreateLookAt(CAMERA_POSITION, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f})
                  * SimpleMath::Matrix::CreatePerspectiveFieldOfView(
                      DirectX::XMConvertToRadians(59.0f), // 59.0f = 90 deg horizontal FoV at 16:9
-                     16.0f / 9.0f,
-                     0.1f,
-                     5.0f))
+                     windowWidth / (float)windowHeight,
+                     1.0f,
+                     10.0f))
                     .Transpose();
             std::memcpy(
                 (char*)uploadBufferDataPointer + state.constants.UPLOAD_CBV_VIEWPROJ_OFFSET,

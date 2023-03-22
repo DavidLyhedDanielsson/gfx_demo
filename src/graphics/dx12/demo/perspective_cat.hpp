@@ -21,7 +21,7 @@ namespace PerspectiveCat
     constexpr uint32_t TEXTURE_HEIGHT = 512;
     constexpr uint32_t TEXTURE_CHANNELS = 4;
 
-    constexpr DirectX::SimpleMath::Vector3 CAMERA_POSITION{0.0f, 0.0f, 1.0f};
+    constexpr DirectX::SimpleMath::Vector3 CAMERA_POSITION{0.0f, 0.0f, 2.0f};
 
     // clang-format off
     constexpr std::array vertexPositionData {
