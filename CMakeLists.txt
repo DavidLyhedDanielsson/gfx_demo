@@ -5,12 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/$<$<CONFIG:RELEASE>:release>$<$<CONFIG:DEBUG>:debug>)
-set(ROOT_DIR_ASSETS ${CMAKE_CURRENT_SOURCE_DIR}/data)
-set(ROOT_DIR_SHADERS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders)
-# ROOT_DIR_ASSETS_STR is needed to make it work as expected and not break the
+set(ROOT_DIR_ASSET ${CMAKE_CURRENT_SOURCE_DIR}/data)
+set(ROOT_DIR_SHADER ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shader)
+# ROOT_DIR_ASSET_STR is needed to make it work as expected and not break the
 # syntax highlighting in CMakeLists files
-set(ROOT_DIR_ASSETS_STR "\"${CMAKE_CURRENT_SOURCE_DIR}/data\"")
-set(ROOT_DIR_SHADERS_STR "\"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders\"")
+set(ROOT_DIR_ASSET_STR "\"${CMAKE_CURRENT_SOURCE_DIR}/data\"")
+set(ROOT_DIR_SHADER_STR "\"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shader\"")
 
 # Why why why why why why why why
 if(WIN32)

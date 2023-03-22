@@ -4,17 +4,17 @@ namespace Path
 {
 std::filesystem::path getAssetPath()
 {
-    return std::filesystem::path(ROOT_DIR_ASSETS);
+    return std::filesystem::path(ROOT_DIR_ASSET);
 }
 
 std::filesystem::path getAssetPath(const std::filesystem::path& name)
 {
-    return std::filesystem::path(ROOT_DIR_ASSETS) / name;
+    return std::filesystem::path(ROOT_DIR_ASSET) / name;
 }
 
 std::filesystem::path getShaderPath()
 {
-    return std::filesystem::path(ROOT_DIR_SHADERS);
+    return std::filesystem::path(ROOT_DIR_SHADER);
 }
 
 std::filesystem::path getShaderPath(const std::filesystem::path& name)

@@ -6,28 +6,28 @@
 #include <thread>
 
 #ifdef DEMO_NDC_TRIANGLE
-    #include <graphics/dx12/demos/ndc_triangle.hpp>
+    #include <graphics/dx12/demo/ndc_triangle.hpp>
 #endif
 #ifdef DEMO_VERTEX_TRIANGLE_IA
-    #include <graphics/dx12/demos/vertex_triangle_ia.hpp>
+    #include <graphics/dx12/demo/vertex_triangle_ia.hpp>
 #endif
 #ifdef DEMO_VERTEX_TRIANGLE_PULL
-    #include <graphics/dx12/demos/vertex_triangle_pull.hpp>
+    #include <graphics/dx12/demo/vertex_triangle_pull.hpp>
 #endif
 #ifdef DEMO_SPINNING_TRIANGLE
-    #include <graphics/dx12/demos/spinning_triangle.hpp>
+    #include <graphics/dx12/demo/spinning_triangle.hpp>
 #endif
 #ifdef DEMO_SPINNING_QUAD
-    #include <graphics/dx12/demos/spinning_quad.hpp>
+    #include <graphics/dx12/demo/spinning_quad.hpp>
 #endif
 #ifdef DEMO_SPINNING_CAT
-    #include <graphics/dx12/demos/spinning_cat.hpp>
+    #include <graphics/dx12/demo/spinning_cat.hpp>
 #endif
 #ifdef DEMO_PERSPECTIVE_CAT
-    #include <graphics/dx12/demos/perspective_cat.hpp>
+    #include <graphics/dx12/demo/perspective_cat.hpp>
 #endif
 #ifdef DEMO_CUBED_CAT
-    #include <graphics/dx12/demos/cubed_cat.hpp>
+    #include <graphics/dx12/demo/cubed_cat.hpp>
 #endif
 
 #include <SDL2/SDL.h>

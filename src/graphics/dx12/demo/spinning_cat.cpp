@@ -1,5 +1,5 @@
 #include "spinning_cat.hpp"
-#include "graphics/dx12/demos/spinning_cat.hpp"
+#include "graphics/dx12/demo/spinning_cat.hpp"
 
 #include <DirectXMath.h>
 #include <array>

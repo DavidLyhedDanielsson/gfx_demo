@@ -1,7 +1,7 @@
 # Shaders
-add_custom_target(shaders)
-set(SHADER_SRC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/shaders/)
-set(SHADER_OUTPUT_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders)
+add_custom_target(shader)
+set(SHADER_SRC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/shader/)
+set(SHADER_OUTPUT_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shader)
 
 set(SHADER_PS
     "white"
@@ -19,7 +19,7 @@ set(SHADER_VS
 )
 
 add_custom_command(
-        TARGET shaders
+        TARGET shader
         MAIN_DEPENDENCY ${SHADER_OUTPUT_DIR}
         COMMENT "Creating shader output directories"
         COMMAND ${CMAKE_COMMAND} -E make_directory ${SHADER_OUTPUT_DIR}
@@ -30,7 +30,7 @@ add_custom_command(
 function(CompileShader TYPE FILE_NAME)
     string(TOLOWER ${TYPE} TYPE)
     add_custom_command(
-            TARGET shaders
+            TARGET shader
             MAIN_DEPENDENCY ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.bin
             COMMENT "Compiling ${TYPE} at ${FILE_NAME}"
             COMMAND dxc -O0 -E main -T ${TYPE}_6_5 -Zi ${SHADER_SRC_ROOT_DIR}/${TYPE}/${FILE_NAME}.hlsl -Fo ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.bin -Fd ${SHADER_OUTPUT_DIR}/${TYPE}/${FILE_NAME}.pdb
@@ -63,14 +63,14 @@ list(TRANSFORM SRC_UTIL PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/util/)
 set(SRC_DX
     blend_state.hpp
     versioning.hpp
-    demos/ndc_triangle.cpp demos/ndc_triangle.hpp
-    demos/vertex_triangle_ia.cpp demos/vertex_triangle_ia.hpp
-    demos/vertex_triangle_pull.cpp demos/vertex_triangle_pull.hpp
-    demos/spinning_triangle.cpp demos/spinning_triangle.hpp
-    demos/spinning_quad.cpp demos/spinning_quad.hpp
-    demos/spinning_cat.cpp demos/spinning_cat.hpp
-    demos/perspective_cat.cpp demos/perspective_cat.hpp
-    demos/cubed_cat.cpp demos/cubed_cat.hpp
+    demo/ndc_triangle.cpp demo/ndc_triangle.hpp
+    demo/vertex_triangle_ia.cpp demo/vertex_triangle_ia.hpp
+    demo/vertex_triangle_pull.cpp demo/vertex_triangle_pull.hpp
+    demo/spinning_triangle.cpp demo/spinning_triangle.hpp
+    demo/spinning_quad.cpp demo/spinning_quad.hpp
+    demo/spinning_cat.cpp demo/spinning_cat.hpp
+    demo/perspective_cat.cpp demo/perspective_cat.hpp
+    demo/cubed_cat.cpp demo/cubed_cat.hpp
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
@@ -83,12 +83,12 @@ function(create_demo EXECUTABLE_NAME)
         main.cpp
     )
     add_dependencies(${EXECUTABLE_NAME}
-        shaders
+        shader
     )
 
     target_compile_definitions(${EXECUTABLE_NAME} PRIVATE
-        ROOT_DIR_ASSETS=${ROOT_DIR_ASSETS_STR}
-        ROOT_DIR_SHADERS=${ROOT_DIR_SHADERS_STR}
+        ROOT_DIR_ASSET=${ROOT_DIR_ASSET_STR}
+        ROOT_DIR_SHADER=${ROOT_DIR_SHADER_STR}
         DEMO_${UPPER_NAME}
     )
     target_include_directories(${EXECUTABLE_NAME} PRIVATE
