@@ -74,7 +74,9 @@ set(SRC_DX
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
-function(create_demo EXECUTABLE_NAME DEFINE)
+function(create_demo EXECUTABLE_NAME)
+    string(TOUPPER ${EXECUTABLE_NAME} UPPER_NAME)
+
     add_executable(${EXECUTABLE_NAME}
         ${SRC_UTIL}
         ${SRC_DX}
@@ -87,7 +89,7 @@ function(create_demo EXECUTABLE_NAME DEFINE)
     target_compile_definitions(${EXECUTABLE_NAME} PRIVATE
         ROOT_DIR_ASSETS=${ROOT_DIR_ASSETS_STR}
         ROOT_DIR_SHADERS=${ROOT_DIR_SHADERS_STR}
-        ${DEFINE}
+        DEMO_${UPPER_NAME}
     )
     target_include_directories(${EXECUTABLE_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
@@ -101,11 +103,11 @@ function(create_demo EXECUTABLE_NAME DEFINE)
     )
 endfunction()
 
-create_demo(ndc_triangle DEMO_NDC_TRIANGLE)
-create_demo(vertex_triangle_ia DEMO_VERTEX_TRIANGLE_IA)
-create_demo(vertex_triangle_pull DEMO_VERTEX_TRIANGLE_PULL)
-create_demo(spinning_triangle DEMO_SPINNING_TRIANGLE)
-create_demo(spinning_quad DEMO_SPINNING_QUAD)
-create_demo(spinning_cat DEMO_SPINNING_CAT)
-create_demo(perspective_cat DEMO_PERSPECTIVE_CAT)
-create_demo(cubed_cat DEMO_CUBED_CAT)
+create_demo(ndc_triangle)
+create_demo(vertex_triangle_ia)
+create_demo(vertex_triangle_pull)
+create_demo(spinning_triangle)
+create_demo(spinning_quad)
+create_demo(spinning_cat)
+create_demo(perspective_cat)
+create_demo(cubed_cat)

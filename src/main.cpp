@@ -1,4 +1,3 @@
-#include <SDL_keycode.h>
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
@@ -32,6 +31,7 @@
 #endif
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_syswm.h>
 
 int main(int argc, char** argv)
