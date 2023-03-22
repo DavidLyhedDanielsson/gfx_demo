@@ -1,3 +1,4 @@
+#include <SDL_keycode.h>
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
@@ -82,6 +83,12 @@ int main(int argc, char** argv)
         while(SDL_PollEvent(&event))
         {
             if(event.type == SDL_QUIT)
+            {
+                running = false;
+                break;
+            }
+
+            if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
             {
                 running = false;
                 break;
