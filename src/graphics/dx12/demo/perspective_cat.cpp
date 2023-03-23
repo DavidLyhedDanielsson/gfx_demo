@@ -330,8 +330,8 @@ namespace PerspectiveCat
                     .Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D,
                     .Alignment =
                         0, // https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc#alignment
-                    .Width = 512,
-                    .Height = 512,
+                    .Width = TEXTURE_WIDTH,
+                    .Height = TEXTURE_HEIGHT,
                     .DepthOrArraySize = 1, // Mandatory
                     .MipLevels = 1,
                     .Format = DXGI_FORMAT_R8G8B8A8_UNORM,
@@ -447,8 +447,8 @@ namespace PerspectiveCat
                             .Footprint =
                                 D3D12_SUBRESOURCE_FOOTPRINT{
                                     .Format = DXGI_FORMAT_R8G8B8A8_UNORM,
-                                    .Width = 512,
-                                    .Height = 512,
+                                    .Width = TEXTURE_WIDTH,
+                                    .Height = TEXTURE_HEIGHT,
                                     .Depth = 1,
                                     .RowPitch = textureRowPitch,
                                 },

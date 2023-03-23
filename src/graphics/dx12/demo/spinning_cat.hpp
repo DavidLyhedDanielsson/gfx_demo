@@ -16,6 +16,10 @@ namespace SpinningCat
     constexpr uint32_t MSAA_COUNT = 1;
     constexpr uint32_t MSAA_QUALITY = 0;
 
+    constexpr uint32_t TEXTURE_WIDTH = 512;
+    constexpr uint32_t TEXTURE_HEIGHT = 512;
+    constexpr uint32_t TEXTURE_CHANNELS = 4;
+
     // clang-format off
     constexpr std::array vertexPositionData {
         -0.5f,  0.5f,

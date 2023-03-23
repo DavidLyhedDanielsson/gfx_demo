@@ -1,5 +1,4 @@
 #include "spinning_cat.hpp"
-#include "graphics/dx12/demo/spinning_cat.hpp"
 
 #include <DirectXMath.h>
 #include <array>
@@ -152,7 +151,6 @@ namespace SpinningCat
         }
 
         uint32_t textureRowPitch;
-        uint32_t textureHeight;
         std::vector<char> textureData;
         {
             auto catPath = Path::getRandomCat();
@@ -174,12 +172,13 @@ namespace SpinningCat
                 stbi_load(catPath.c_str(), &width, &textureHeight, &channels, STBI_rgb_alpha),
                 stbi_image_free);
 #endif
-            textureHeight = height;
+            assert(width == TEXTURE_WIDTH);
+            assert(height == TEXTURE_HEIGHT);
 
             textureRowPitch = AlignTo(width * 4, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
 
-            textureData.resize(textureRowPitch * textureHeight);
-            for(uint32_t i = 0; i < textureHeight; ++i)
+            textureData.resize(textureRowPitch * TEXTURE_HEIGHT);
+            for(uint32_t i = 0; i < TEXTURE_HEIGHT; ++i)
                 std::memcpy(textureData.data() + textureRowPitch * i, stbiData.get() + width * 4 * i, width * 4);
         }
 
@@ -197,7 +196,7 @@ namespace SpinningCat
                     .Dimension = D3D12_RESOURCE_DIMENSION_BUFFER,
                     .Alignment =
                         0, // https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc#alignment
-                    .Width = state.constants.UPLOAD_TEXTURE_OFFSET + textureHeight * textureRowPitch,
+                    .Width = state.constants.UPLOAD_TEXTURE_OFFSET + TEXTURE_HEIGHT * textureRowPitch,
                     .Height = 1, // Mandatory
                     .DepthOrArraySize = 1, // Mandatory
                     .MipLevels = 1, // Mandatory
@@ -318,8 +317,8 @@ namespace SpinningCat
                     .Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D,
                     .Alignment =
                         0, // https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc#alignment
-                    .Width = 512,
-                    .Height = 512,
+                    .Width = TEXTURE_WIDTH,
+                    .Height = TEXTURE_HEIGHT,
                     .DepthOrArraySize = 1, // Mandatory
                     .MipLevels = 1,
                     .Format = DXGI_FORMAT_R8G8B8A8_UNORM,
@@ -423,8 +422,8 @@ namespace SpinningCat
                             .Footprint =
                                 D3D12_SUBRESOURCE_FOOTPRINT{
                                     .Format = DXGI_FORMAT_R8G8B8A8_UNORM,
-                                    .Width = 512,
-                                    .Height = 512,
+                                    .Width = TEXTURE_WIDTH,
+                                    .Height = TEXTURE_HEIGHT,
                                     .Depth = 1,
                                     .RowPitch = textureRowPitch,
                                 },
