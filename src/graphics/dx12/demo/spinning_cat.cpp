@@ -1,4 +1,6 @@
-#include "spinning_cat.hpp"
+#define XSTR(x) #x
+#define STR(x) XSTR(x)
+#include STR(DEMO_NAME.hpp)
 
 #include <DirectXMath.h>
 #include <array>
@@ -23,11 +25,11 @@
 #include <util/path.hpp>
 #include <util/stbi.hpp>
 
-static dx12_demo::spinning_cat::State state;
+static dx12_demo::DEMO_NAME::State state;
 
 namespace dx12_demo
 {
-namespace spinning_cat
+namespace DEMO_NAME
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {

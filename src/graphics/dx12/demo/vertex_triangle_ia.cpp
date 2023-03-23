@@ -1,4 +1,6 @@
-#include "vertex_triangle_ia.hpp"
+#define XSTR(x) #x
+#define STR(x) XSTR(x)
+#include STR(DEMO_NAME.hpp)
 
 #include <array>
 #include <cstring>
@@ -20,11 +22,11 @@
 #include <util/file_util.hpp>
 #include <util/path.hpp>
 
-static dx12_demo::vertex_triangle_ia::State state;
+static dx12_demo::DEMO_NAME::State state;
 
 namespace dx12_demo
 {
-namespace vertex_triangle_ia
+namespace DEMO_NAME
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {

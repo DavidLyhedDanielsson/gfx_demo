@@ -1,4 +1,6 @@
-#include "ndc_triangle.hpp"
+#define XSTR(x) #x
+#define STR(x) XSTR(x)
+#include STR(DEMO_NAME.hpp)
 
 #include <array>
 #include <iostream>
@@ -18,11 +20,11 @@
 #include <util/file_util.hpp>
 #include <util/path.hpp>
 
-static dx12_demo::ndc_triangle::State state;
+static dx12_demo::DEMO_NAME::State state;
 
 namespace dx12_demo
 {
-namespace ndc_triangle
+namespace DEMO_NAME
 {
 
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)

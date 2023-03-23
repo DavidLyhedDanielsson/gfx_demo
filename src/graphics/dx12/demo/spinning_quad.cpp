@@ -1,5 +1,7 @@
 
-#include "spinning_quad.hpp"
+#define XSTR(x) #x
+#define STR(x) XSTR(x)
+#include STR(DEMO_NAME.hpp)
 
 #include <DirectXMath.h>
 #include <array>
@@ -23,11 +25,11 @@
 #include <util/file_util.hpp>
 #include <util/path.hpp>
 
-static dx12_demo::spinning_quad::State state;
+static dx12_demo::DEMO_NAME::State state;
 
 namespace dx12_demo
 {
-namespace spinning_quad
+namespace DEMO_NAME
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {

@@ -7,7 +7,7 @@
 
 namespace dx12_demo
 {
-namespace spinning_triangle
+namespace DEMO_NAME
 {
     constexpr uint32_t BACKBUFFER_COUNT = 3;
     constexpr DXGI_FORMAT BACKBUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM;
