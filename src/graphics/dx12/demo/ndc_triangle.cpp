@@ -18,11 +18,11 @@
 #include <util/file_util.hpp>
 #include <util/path.hpp>
 
-static DX12Demo::NDCTriangle::State state;
+static dx12_demo::ndc_triangle::State state;
 
-namespace DX12Demo
+namespace dx12_demo
 {
-namespace NDCTriangle
+namespace ndc_triangle
 {
 
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)

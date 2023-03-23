@@ -22,11 +22,11 @@
 #include <util/file_util.hpp>
 #include <util/path.hpp>
 
-static DX12Demo::SpinningTriangle::State state;
+static dx12_demo::spinning_triangle::State state;
 
-namespace DX12Demo
+namespace dx12_demo
 {
-namespace SpinningTriangle
+namespace spinning_triangle
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {

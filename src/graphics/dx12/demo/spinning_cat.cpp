@@ -23,11 +23,11 @@
 #include <util/path.hpp>
 #include <util/stbi.hpp>
 
-static DX12Demo::SpinningCat::State state;
+static dx12_demo::spinning_cat::State state;
 
-namespace DX12Demo
+namespace dx12_demo
 {
-namespace SpinningCat
+namespace spinning_cat
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {

@@ -7,9 +7,9 @@
 
 #include <SimpleMath.h>
 
-namespace DX12Demo
+namespace dx12_demo
 {
-namespace SpinningCat
+namespace spinning_cat
 {
     constexpr uint32_t BACKBUFFER_COUNT = 3;
     constexpr DXGI_FORMAT BACKBUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM;

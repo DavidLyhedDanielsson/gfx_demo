@@ -5,30 +5,12 @@
 #include <iostream>
 #include <thread>
 
-#ifdef DEMO_NDC_TRIANGLE
-    #include <graphics/dx12/demo/ndc_triangle.hpp>
-#endif
-#ifdef DEMO_VERTEX_TRIANGLE_IA
-    #include <graphics/dx12/demo/vertex_triangle_ia.hpp>
-#endif
-#ifdef DEMO_VERTEX_TRIANGLE_PULL
-    #include <graphics/dx12/demo/vertex_triangle_pull.hpp>
-#endif
-#ifdef DEMO_SPINNING_TRIANGLE
-    #include <graphics/dx12/demo/spinning_triangle.hpp>
-#endif
-#ifdef DEMO_SPINNING_QUAD
-    #include <graphics/dx12/demo/spinning_quad.hpp>
-#endif
-#ifdef DEMO_SPINNING_CAT
-    #include <graphics/dx12/demo/spinning_cat.hpp>
-#endif
-#ifdef DEMO_PERSPECTIVE_CAT
-    #include <graphics/dx12/demo/perspective_cat.hpp>
-#endif
-#ifdef DEMO_CUBED_CAT
-    #include <graphics/dx12/demo/cubed_cat.hpp>
-#endif
+// clang-format off
+// Include current demo only
+#define XSTR(x) #x
+#define STR(x) XSTR(x)
+#include STR(graphics/dx12/demo/DEMO_NAME.hpp)
+// clang-format on
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keycode.h>
@@ -51,30 +33,7 @@ int main(int argc, char** argv)
     SDL_VERSION(&wmInfo.version)
     SDL_GetWindowWMInfo(sdlWindow, &wmInfo);
 
-#ifdef DEMO_NDC_TRIANGLE
-    DX12Demo::NDCTriangle::init(wmInfo.info.win.window, windowWidth, windowHeight);
-#endif
-#ifdef DEMO_VERTEX_TRIANGLE_IA
-    DX12Demo::VertexTriangleIA::init(wmInfo.info.win.window, windowWidth, windowHeight);
-#endif
-#ifdef DEMO_VERTEX_TRIANGLE_PULL
-    DX12Demo::VertexTrianglePull::init(wmInfo.info.win.window, windowWidth, windowHeight);
-#endif
-#ifdef DEMO_SPINNING_TRIANGLE
-    DX12Demo::SpinningTriangle::init(wmInfo.info.win.window, windowWidth, windowHeight);
-#endif
-#ifdef DEMO_SPINNING_QUAD
-    DX12Demo::SpinningQuad::init(wmInfo.info.win.window, windowWidth, windowHeight);
-#endif
-#ifdef DEMO_SPINNING_CAT
-    DX12Demo::SpinningCat::init(wmInfo.info.win.window, windowWidth, windowHeight);
-#endif
-#ifdef DEMO_PERSPECTIVE_CAT
-    DX12Demo::PerspectiveCat::init(wmInfo.info.win.window, windowWidth, windowHeight);
-#endif
-#ifdef DEMO_CUBED_CAT
-    DX12Demo::CubedCat::init(wmInfo.info.win.window, windowWidth, windowHeight);
-#endif
+    dx12_demo::DEMO_NAME::init(wmInfo.info.win.window, windowWidth, windowHeight);
 
     bool running = true;
     while(running)
@@ -98,30 +57,7 @@ int main(int argc, char** argv)
         if(!running)
             break;
 
-#ifdef DEMO_NDC_TRIANGLE
-        DX12Demo::NDCTriangle::render(windowWidth, windowHeight);
-#endif
-#ifdef DEMO_VERTEX_TRIANGLE_IA
-        DX12Demo::VertexTriangleIA::render(windowWidth, windowHeight);
-#endif
-#ifdef DEMO_VERTEX_TRIANGLE_PULL
-        DX12Demo::VertexTrianglePull::render(windowWidth, windowHeight);
-#endif
-#ifdef DEMO_SPINNING_TRIANGLE
-        DX12Demo::SpinningTriangle::render(windowWidth, windowHeight);
-#endif
-#ifdef DEMO_SPINNING_QUAD
-        DX12Demo::SpinningQuad::render(windowWidth, windowHeight);
-#endif
-#ifdef DEMO_SPINNING_CAT
-        DX12Demo::SpinningCat::render(windowWidth, windowHeight);
-#endif
-#ifdef DEMO_PERSPECTIVE_CAT
-        DX12Demo::PerspectiveCat::render(windowWidth, windowHeight);
-#endif
-#ifdef DEMO_CUBED_CAT
-        DX12Demo::CubedCat::render(windowWidth, windowHeight);
-#endif
+        dx12_demo::DEMO_NAME::render(windowWidth, windowHeight);
     }
 
     return 0;

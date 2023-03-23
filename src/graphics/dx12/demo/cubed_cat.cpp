@@ -23,13 +23,13 @@
 #include <util/path.hpp>
 #include <util/stbi.hpp>
 
-static DX12Demo::CubedCat::State state;
+static dx12_demo::cubed_cat::State state;
 
 namespace SimpleMath = DirectX::SimpleMath;
 
-namespace DX12Demo
+namespace dx12_demo
 {
-namespace CubedCat
+namespace cubed_cat
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {

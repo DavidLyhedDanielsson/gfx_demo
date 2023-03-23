@@ -8,9 +8,9 @@
 #include <SimpleMath.h>
 #include <d3d12.h>
 
-namespace DX12Demo
+namespace dx12_demo
 {
-namespace PerspectiveCat
+namespace perspective_cat
 {
     constexpr uint32_t BACKBUFFER_COUNT = 3;
     constexpr DXGI_FORMAT BACKBUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM;

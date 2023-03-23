@@ -20,11 +20,11 @@
 #include <util/file_util.hpp>
 #include <util/path.hpp>
 
-static DX12Demo::VertexTriangleIA::State state;
+static dx12_demo::vertex_triangle_ia::State state;
 
-namespace DX12Demo
+namespace dx12_demo
 {
-namespace VertexTriangleIA
+namespace vertex_triangle_ia
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {

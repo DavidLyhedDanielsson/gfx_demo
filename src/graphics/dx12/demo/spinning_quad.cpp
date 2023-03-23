@@ -23,11 +23,11 @@
 #include <util/file_util.hpp>
 #include <util/path.hpp>
 
-static DX12Demo::SpinningQuad::State state;
+static dx12_demo::spinning_quad::State state;
 
-namespace DX12Demo
+namespace dx12_demo
 {
-namespace SpinningQuad
+namespace spinning_quad
 {
     void init(HWND hWnd, uint32_t windowWidth, uint32_t windowHeight)
     {

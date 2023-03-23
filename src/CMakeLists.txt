@@ -62,39 +62,34 @@ list(TRANSFORM SRC_UTIL PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/util/)
 
 set(SRC_DX
     blend_state.hpp
+    depth_stencil_state.hpp
+    rasterizer_state.hpp
     versioning.hpp
-    demo/ndc_triangle.cpp demo/ndc_triangle.hpp
-    demo/vertex_triangle_ia.cpp demo/vertex_triangle_ia.hpp
-    demo/vertex_triangle_pull.cpp demo/vertex_triangle_pull.hpp
-    demo/spinning_triangle.cpp demo/spinning_triangle.hpp
-    demo/spinning_quad.cpp demo/spinning_quad.hpp
-    demo/spinning_cat.cpp demo/spinning_cat.hpp
-    demo/perspective_cat.cpp demo/perspective_cat.hpp
-    demo/cubed_cat.cpp demo/cubed_cat.hpp
 )
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
-function(create_demo EXECUTABLE_NAME)
-    string(TOUPPER ${EXECUTABLE_NAME} UPPER_NAME)
+function(create_demo DEMO_NAME)
+    string(TOUPPER ${DEMO_NAME} DEMO_NAME_UPPER)
 
-    add_executable(${EXECUTABLE_NAME}
+    add_executable(${DEMO_NAME}
         ${SRC_UTIL}
         ${SRC_DX}
         main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/demo/${DEMO_NAME}.cpp ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/demo/${DEMO_NAME}.hpp
     )
-    add_dependencies(${EXECUTABLE_NAME}
+    add_dependencies(${DEMO_NAME}
         shader
     )
 
-    target_compile_definitions(${EXECUTABLE_NAME} PRIVATE
+    target_compile_definitions(${DEMO_NAME} PRIVATE
         ROOT_DIR_ASSET=${ROOT_DIR_ASSET_STR}
         ROOT_DIR_SHADER=${ROOT_DIR_SHADER_STR}
-        DEMO_${UPPER_NAME}
+        DEMO_NAME=${DEMO_NAME}
     )
-    target_include_directories(${EXECUTABLE_NAME} PRIVATE
+    target_include_directories(${DEMO_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
     )
-    target_link_libraries(${EXECUTABLE_NAME} PRIVATE
+    target_link_libraries(${DEMO_NAME} PRIVATE
         SDL2::SDL2 SDL2::SDL2main
         EnTT::EnTT
         ${ASSIMP_LIBRARIES}
