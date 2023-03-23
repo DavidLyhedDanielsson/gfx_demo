@@ -107,9 +107,9 @@ namespace DEMO_NAME
 
         struct
         {
-            uint32_t UPLOAD_VERTEX_POSITION_OFFSET = 0;
             // clang-format off
             // Note: this approach is manual and error-prone and shouldn't be used in a real project
+            uint32_t UPLOAD_VERTEX_POSITION_OFFSET = 0;
             uint32_t UPLOAD_VERTEX_UV_OFFSET =      AlignTo256(UPLOAD_VERTEX_POSITION_OFFSET + sizeof(vertexPositionData));
             uint32_t UPLOAD_INDEX_OFFSET =          AlignTo256(UPLOAD_VERTEX_UV_OFFSET       + sizeof(vertexUvData));
             uint32_t UPLOAD_CBV_TRANSFORM_OFFSET =  AlignTo256(UPLOAD_INDEX_OFFSET           + sizeof(indexData));

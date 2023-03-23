@@ -99,11 +99,14 @@ namespace DEMO_NAME
 
         struct
         {
+            // clang-format off
+            // Note: this approach is manual and error-prone and shouldn't be used in a real project
             uint32_t UPLOAD_VERTEX_POSITION_OFFSET = 0;
             uint32_t UPLOAD_VERTEX_UV_OFFSET = AlignTo(UPLOAD_VERTEX_POSITION_OFFSET + sizeof(vertexPositionData), 256);
-            uint32_t UPLOAD_INDEX_OFFSET = AlignTo(UPLOAD_VERTEX_UV_OFFSET + sizeof(vertexUvData), 256);
-            uint32_t UPLOAD_CBV_OFFSET = AlignTo(UPLOAD_INDEX_OFFSET + sizeof(indexData), 256);
-            uint32_t UPLOAD_TEXTURE_OFFSET = AlignTo(UPLOAD_CBV_OFFSET + sizeof(DirectX::SimpleMath::Matrix), 256);
+            uint32_t UPLOAD_INDEX_OFFSET =     AlignTo(UPLOAD_VERTEX_UV_OFFSET       + sizeof(vertexUvData), 256);
+            uint32_t UPLOAD_CBV_OFFSET =       AlignTo(UPLOAD_INDEX_OFFSET           + sizeof(indexData), 256);
+            uint32_t UPLOAD_TEXTURE_OFFSET =   AlignTo(UPLOAD_CBV_OFFSET             + sizeof(DirectX::SimpleMath::Matrix), 256);
+            // clang-format on
         } constants;
     };
 
