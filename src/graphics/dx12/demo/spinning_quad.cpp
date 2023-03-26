@@ -158,7 +158,7 @@ namespace DEMO_NAME
                     .Alignment =
                         0, // https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc#alignment
                     .Width = sizeof(vertexData) + sizeof(indexData) + (256 - sizeof(vertexData) - sizeof(indexData))
-                             + sizeof(DirectX::SimpleMath::Matrix), // CBV must be 256-byte aligned
+                             + sizeof(DirectX::XMFLOAT4X4), // CBV must be 256-byte aligned
                     .Height = 1, // Mandatory
                     .DepthOrArraySize = 1, // Mandatory
                     .MipLevels = 1, // Mandatory

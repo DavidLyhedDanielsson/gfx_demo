@@ -145,7 +145,7 @@ namespace DEMO_NAME
             uint32_t UPLOAD_VERTEX_UV_OFFSET =      AlignTo256(UPLOAD_VERTEX_POSITION_OFFSET + sizeof(DirectX::XMFLOAT3) * vertices.size());
             uint32_t UPLOAD_INDEX_OFFSET =          AlignTo256(UPLOAD_VERTEX_UV_OFFSET       + sizeof(DirectX::XMFLOAT2) * vertices.size());
             uint32_t UPLOAD_CBV_TRANSFORM_OFFSET =  AlignTo256(UPLOAD_INDEX_OFFSET           + sizeof(indexData));
-            uint32_t UPLOAD_TEXTURE_OFFSET =        AlignTo(   UPLOAD_CBV_TRANSFORM_OFFSET   + sizeof(DirectX::SimpleMath::Matrix), D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
+            uint32_t UPLOAD_TEXTURE_OFFSET =        AlignTo(   UPLOAD_CBV_TRANSFORM_OFFSET   + sizeof(DirectX::XMFLOAT4X4), D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
             uint32_t UPLOAD_CBV_VIEWPROJ_OFFSET =   AlignTo256(UPLOAD_TEXTURE_OFFSET         + AlignTo(TEXTURE_WIDTH * TEXTURE_CHANNELS, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT);
             uint32_t UPLOAD_BUFFER_SIZE =           AlignTo256(UPLOAD_CBV_VIEWPROJ_OFFSET    + sizeof(DirectX::XMFLOAT4X4));
             // clang-format on

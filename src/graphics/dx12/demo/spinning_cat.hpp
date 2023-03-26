@@ -105,7 +105,7 @@ namespace DEMO_NAME
             uint32_t UPLOAD_VERTEX_UV_OFFSET = AlignTo(UPLOAD_VERTEX_POSITION_OFFSET + sizeof(vertexPositionData), 256);
             uint32_t UPLOAD_INDEX_OFFSET =     AlignTo(UPLOAD_VERTEX_UV_OFFSET       + sizeof(vertexUvData), 256);
             uint32_t UPLOAD_CBV_OFFSET =       AlignTo(UPLOAD_INDEX_OFFSET           + sizeof(indexData), 256);
-            uint32_t UPLOAD_TEXTURE_OFFSET =   AlignTo(UPLOAD_CBV_OFFSET             + sizeof(DirectX::SimpleMath::Matrix), 256);
+            uint32_t UPLOAD_TEXTURE_OFFSET =   AlignTo(UPLOAD_CBV_OFFSET             + sizeof(DirectX::XMFLOAT4X4), 256);
             // clang-format on
         } constants;
     };
