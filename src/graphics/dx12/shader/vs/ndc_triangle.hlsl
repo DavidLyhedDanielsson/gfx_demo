@@ -5,6 +5,6 @@ const static float2 vertices[3] = {
 };
 
 float4 main(uint vertexId : SV_VERTEXID) : SV_POSITION {
-  float2 position = vertices[vertexId];
-  return float4(position.x, position.y, 0.0f, 1.0f);
+    float2 position = vertices[vertexId];
+    return float4(position.x, position.y, 0.0f, 1.0f);
 }
