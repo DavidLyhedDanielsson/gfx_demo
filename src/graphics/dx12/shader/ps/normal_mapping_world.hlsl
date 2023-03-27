@@ -5,17 +5,15 @@ SamplerState samp : register(s0);
 
 struct Input {
     float2 uv : UV;
-    float3 normal : NORMAL;
-    float3 tangent : TANGENT;
+    float3 normalWorld : NORMAL;
+    float3 tangentWorld : TANGENT;
 };
 
 float4 main(Input input) : SV_Target {
     const static float3 lightPos = normalize(float3(0.0f, 0.0f, 1.0f));
 
-    float3 worldNormal =    input.normal;
-    float3 worldTangent =   normalize(input.tangent - dot(input.tangent, worldNormal) * worldNormal);
-    float3 worldBitangent = cross(worldNormal, worldTangent);
-    float3x3 tbnMatrix = float3x3(worldTangent, worldBitangent, worldNormal);
+    float3 bitangentWorld = cross(input.normalWorld, input.tangentWorld);
+    float3x3 tbnMatrix = float3x3(input.tangentWorld, bitangentWorld, input.normalWorld);
 
     float3 texelNormal = normalize(2.0f * normal.Sample(samp, input.uv).rgb - 1.0f);
     float3 mappedNormal = mul(texelNormal, tbnMatrix);

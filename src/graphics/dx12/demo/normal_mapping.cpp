@@ -586,8 +586,8 @@ namespace DEMO_NAME
                  * SimpleMath::Matrix::CreatePerspectiveFieldOfView(
                      DirectX::XMConvertToRadians(59.0f), // 59.0f = 90 deg horizontal FoV at 16:9
                      windowWidth / (float)windowHeight,
-                     1.0f,
-                     10.0f))
+                     0.5f,
+                     5.0f))
                     .Transpose();
             std::memcpy(
                 (char*)uploadBufferDataPointer + state.constants.CBV_VIEWPROJ_OFFSET,
@@ -804,13 +804,29 @@ namespace DEMO_NAME
         }
 
         {
-            std::vector vertexShaderCode = FileUtil::readFile(Path::getShaderPath("vs/normal_mapping.bin")).value();
+#ifdef DEMO_VARIANT_TANGENT_SPACE
+            std::vector vertexShaderCode =
+                FileUtil::readFile(Path::getShaderPath("vs/normal_mapping_tangent.bin")).value();
+#elif DEMO_VARIANT_WORLD_SPACE
+            std::vector vertexShaderCode =
+                FileUtil::readFile(Path::getShaderPath("vs/normal_mapping_world.bin")).value();
+#else
+    #error Must be compiled with either -DDEMO_VARIANT_TANGENT_SPACE or -DDEMO_VARIANT_WORLD_SPACE
+#endif
             Die(D3DCreateBlob(vertexShaderCode.size(), state.shaders.vertexBlob.GetAddressOf()));
             std::memcpy(state.shaders.vertexBlob->GetBufferPointer(), vertexShaderCode.data(), vertexShaderCode.size());
         }
 
         {
-            std::vector pixelShaderCode = FileUtil::readFile(Path::getShaderPath("ps/normal_mapping.bin")).value();
+#ifdef DEMO_VARIANT_TANGENT_SPACE
+            std::vector pixelShaderCode =
+                FileUtil::readFile(Path::getShaderPath("ps/normal_mapping_tangent.bin")).value();
+#elif DEMO_VARIANT_WORLD_SPACE
+            std::vector pixelShaderCode =
+                FileUtil::readFile(Path::getShaderPath("ps/normal_mapping_world.bin")).value();
+#else
+    #error Must be compiled with either -DDEMO_VARIANT_TANGENT_SPACE or -DDEMO_VARIANT_WORLD_SPACE
+#endif
             Die(D3DCreateBlob(pixelShaderCode.size(), state.shaders.pixelBlob.GetAddressOf()));
             std::memcpy(state.shaders.pixelBlob->GetBufferPointer(), pixelShaderCode.data(), pixelShaderCode.size());
         }

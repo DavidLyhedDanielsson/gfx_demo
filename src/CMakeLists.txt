@@ -6,7 +6,8 @@ set(SHADER_OUTPUT_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shader)
 set(SHADER_PS
     "white"
     "spinning_cat"
-    "normal_mapping"
+    "normal_mapping_tangent"
+    "normal_mapping_world"
 )
 
 set(SHADER_VS
@@ -17,7 +18,8 @@ set(SHADER_VS
     "spinning_cat"
     "perspective_cat"
     "cubed_cat"
-    "normal_mapping"
+    "normal_mapping_tangent"
+    "normal_mapping_world"
 )
 
 add_custom_command(
@@ -122,4 +124,4 @@ create_demo(spinning_cat)
 create_demo(perspective_cat)
 create_demo(cubed_cat)
 create_demo(placed_cat)
-create_demo(normal_mapping)
+create_demo(normal_mapping WORLD_SPACE TANGENT_SPACE)
