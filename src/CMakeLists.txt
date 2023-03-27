@@ -71,33 +71,46 @@ set(SRC_DX
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
 function(create_demo DEMO_NAME)
-    string(TOUPPER ${DEMO_NAME} DEMO_NAME_UPPER)
+    if(NOT ARGN)
+        set("NONE" ARGN)
+    endif()
 
-    add_executable(${DEMO_NAME}
-        ${SRC_UTIL}
-        ${SRC_DX}
-        main.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/demo/${DEMO_NAME}.cpp ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/demo/${DEMO_NAME}.hpp
-    )
-    add_dependencies(${DEMO_NAME}
-        shader
-    )
+    foreach(VARIANT ${ARGN})
+        set(SOURCE_FILE_NAME ${DEMO_NAME})
+        if(VARIANT EQUAL "NONE")
+            set(EXECUTABLE_NAME ${DEMO_NAME})
+        else()
+            string(TOLOWER ${DEMO_NAME}_${VARIANT} EXECUTABLE_NAME)
+        endif()
 
-    target_compile_definitions(${DEMO_NAME} PRIVATE
-        ROOT_DIR_ASSET=${ROOT_DIR_ASSET_STR}
-        ROOT_DIR_SHADER=${ROOT_DIR_SHADER_STR}
-        DEMO_NAME=${DEMO_NAME}
-    )
-    target_include_directories(${DEMO_NAME} PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
-    )
-    target_link_libraries(${DEMO_NAME} PRIVATE
-        SDL2::SDL2 SDL2::SDL2main
-        EnTT::EnTT
-        assimp::assimp
-        d3d12.lib dxgi.lib d3dcompiler.lib
-        Microsoft::DirectX-Guids Microsoft::DirectX-Headers Microsoft::DirectXTK12
-    )
+        add_executable(${EXECUTABLE_NAME}
+            ${SRC_UTIL}
+            ${SRC_DX}
+            main.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/demo/${SOURCE_FILE_NAME}.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/demo/${SOURCE_FILE_NAME}.hpp
+        )
+        add_dependencies(${EXECUTABLE_NAME}
+            shader
+        )
+
+        target_compile_definitions(${EXECUTABLE_NAME} PRIVATE
+            ROOT_DIR_ASSET=${ROOT_DIR_ASSET_STR}
+            ROOT_DIR_SHADER=${ROOT_DIR_SHADER_STR}
+            DEMO_NAME=${DEMO_NAME}
+            DEMO_VARIANT_${VARIANT}
+        )
+        target_include_directories(${EXECUTABLE_NAME} PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}
+        )
+        target_link_libraries(${EXECUTABLE_NAME} PRIVATE
+            SDL2::SDL2 SDL2::SDL2main
+            EnTT::EnTT
+            assimp::assimp
+            d3d12.lib dxgi.lib d3dcompiler.lib
+            Microsoft::DirectX-Guids Microsoft::DirectX-Headers Microsoft::DirectXTK12
+        )
+    endforeach()
 endfunction()
 
 create_demo(ndc_triangle)
