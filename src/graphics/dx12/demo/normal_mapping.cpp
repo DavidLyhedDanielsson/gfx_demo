@@ -980,9 +980,9 @@ namespace DEMO_NAME
 
         void* uploadBufferDataPointer;
         state.resources.uploadBuffer->Map(0, nullptr, &uploadBufferDataPointer);
-        SimpleMath::Matrix transform =
-            (/*SimpleMath::Matrix::CreateRotationZ(time) * */ SimpleMath::Matrix::CreateRotationY(time * 0.5f))
-                .Transpose();
+        SimpleMath::Matrix transform = (SimpleMath::Matrix::CreateRotationX(std::sinf(time) * 0.2f)
+                                        * SimpleMath::Matrix::CreateRotationY(time * 0.5f))
+                                           .Transpose();
         std::memcpy(
             (char*)uploadBufferDataPointer + state.constants.CBV_TRANSFORM_OFFSET,
             &transform,
