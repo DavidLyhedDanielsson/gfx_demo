@@ -32,7 +32,7 @@ Most of these demos build on top of the previous demo. See description
 |perspective_cat|<img align="left" src="data/demo_screenshot/perspective_cat.webp" width=200>| Builds on top of spinning_cat by adding a perspective projection |
 |cubed_cat|<img align="left" src="data/demo_screenshot/cubed_cat.webp" width=200>| Builds on top of perspective_cat by making the quad a cube |
 |placed_cat|<img align="left" src="data/demo_screenshot/cubed_cat.webp" width=200>| Builds on top of cubed_cat by using placed resources instead of committed resources |
-|normal_mapping|<img align="left" src="data/demo_screenshot/normal_mapping.webp" width=200>| Builds on top of cubed_cat by adding adding multiple things: normal mapping, assimp for asset loading, and a counter to dynamically calculate buffer offsets. Comes in two variants: world space and tangent space normal mapping |
+|normal_mapping|<img align="left" src="data/demo_screenshot/normal_mapping.webp" width=200>| Builds on top of cubed_cat by adding adding multiple things: normal mapping, assimp for asset loading, a counter to dynamically calculate buffer offsets, and Phong lighting. Comes in two variants: _world space_ and _tangent space_ which showcase the difference between lighting calculations in each space |
 
 ## Attribution
 
