@@ -73,6 +73,8 @@ set(SRC_DX
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
 function(create_demo DEMO_NAME)
+    string(TOUPPER ${DEMO_NAME} DEMO_NAME_UPPER)
+
     if(ARGC EQUAL 1)
         set(ARGN "NONE")
     endif()
@@ -100,6 +102,7 @@ function(create_demo DEMO_NAME)
             ROOT_DIR_ASSET=${ROOT_DIR_ASSET_STR}
             ROOT_DIR_SHADER=${ROOT_DIR_SHADER_STR}
             DEMO_NAME=${DEMO_NAME}
+            DEMO_NAME_${DEMO_NAME_UPPER}
             DEMO_VARIANT_${VARIANT}
         )
         target_include_directories(${EXECUTABLE_NAME} PRIVATE
