@@ -1,26 +1,28 @@
 # GFX DEMO
 No nonsense, no framework, no bloat, just examples of rendering techniques
-(currently only in Direct3D 12)
+(currently only in Direct3D 12).
 
 ## Goals
 - Small, self-contained implementations of various rendering techniques
 - Each demo is contained within its own file, i.e. one .hpp and .cpp per demo
 - Each demo demonstrates _one_ technique or feature
-- The code is focused on the demo, use well-known libraries like stbi and assimp
-  if the demo _requires_ it
+- The code is focused on the demo; use well-known libraries like stbi and assimp
+  if the demo requires it
 
 Not really a goal, but if files can be diffed to find out the difference
 between, for instance, using the input assembler and vertex pulling, that is
 encouraged.
 
-Some code can be shared between demos, like window size, backbuffer count, or
+Some code can be shared between demos like window size, backbuffer count, or
 anything else that is common for all demos.
 
 ## Non-goals
 - Production ready code. The demos do not aim to be as efficient as possible
 
 ## Basic demos
-Most of these demos build on top of the previous demo. See description
+Most of these demos build on top of the previous demo. See description. That
+means that most of these can be diffed with the previous demo to quickly find
+out exactly how the technique is implemented.
 
 |Demo name|Screenshot|Description|
 |---|:-:|---|
@@ -33,6 +35,7 @@ Most of these demos build on top of the previous demo. See description
 |cubed_cat|<img align="left" src="data/demo_screenshot/cubed_cat.webp" width=200>| Builds on top of perspective_cat by making the quad a cube |
 |placed_cat|<img align="left" src="data/demo_screenshot/cubed_cat.webp" width=200>| Builds on top of cubed_cat by using placed resources instead of committed resources |
 |normal_mapping|<img align="left" src="data/demo_screenshot/normal_mapping.webp" width=200>| Builds on top of cubed_cat by adding adding multiple things: normal mapping, assimp for asset loading, a counter to dynamically calculate buffer offsets, and Phong lighting. Comes in two variants: _world space_ and _tangent space_ which showcase the difference between lighting calculations in each space |
+|normal_mapping|<img align="left" src="data/demo_screenshot/timing.webp" width=200>| Builds on top of normal_mapping_tangent_space by adding GPU timestamp queries. Also adds simple CPU timing for completeness. The time is displayed in the window title |
 
 ## Attribution
 

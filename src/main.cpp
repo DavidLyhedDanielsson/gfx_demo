@@ -1,3 +1,4 @@
+#include <SDL_video.h>
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
@@ -35,9 +36,47 @@ int main(int argc, char** argv)
 
     dx12_demo::DEMO_NAME::init(wmInfo.info.win.window, windowWidth, windowHeight);
 
+    auto lastTime = std::chrono::high_resolution_clock::now();
+
+    float accumulatedCpuTime = 0.0f;
+    int accumulatedIterations = 0;
+#ifdef DEMO_NAME_TIMING
+    float accumulatedGpuTime = 0.0f;
+#endif
+
     bool running = true;
     while(running)
     {
+        // This time will be very small in the first frame since `lastTime` is initialized just above this
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float> floatTime = currentTime - lastTime;
+        std::chrono::milliseconds frameTimeMS = std::chrono::duration_cast<std::chrono::milliseconds>(floatTime);
+        lastTime = currentTime;
+
+        if(accumulatedIterations == 60)
+        {
+            char buffer[64]{0};
+
+            float cpuTimeMS = accumulatedCpuTime / 60.0f;
+#ifdef DEMO_NAME_TIMING
+            float gpuTimeMS = accumulatedGpuTime / 60.0f;
+            sprintf(buffer, "CPU: %f, GPU: %f", cpuTimeMS, gpuTimeMS);
+#else
+            sprintf(buffer, "CPU: %f", cpuTimeMS);
+#endif
+
+            SDL_SetWindowTitle(sdlWindow, buffer);
+
+            accumulatedCpuTime = 0.0f;
+            accumulatedIterations = 0;
+#ifdef DEMO_NAME_TIMING
+            accumulatedGpuTime = 0.0f;
+#endif
+        }
+
+        accumulatedCpuTime += frameTimeMS.count();
+        ++accumulatedIterations;
+
         SDL_Event event;
         while(SDL_PollEvent(&event))
         {
@@ -58,6 +97,9 @@ int main(int argc, char** argv)
             break;
 
         dx12_demo::DEMO_NAME::render(windowWidth, windowHeight);
+#ifdef DEMO_NAME_TIMING
+        accumulatedGpuTime += dx12_demo::timing::getLastFrameTimeMS();
+#endif
     }
 
     return 0;
