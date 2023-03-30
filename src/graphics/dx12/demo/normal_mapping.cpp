@@ -1,5 +1,3 @@
-#include "normal_mapping.hpp"
-
 #define XSTR(x) #x
 #define STR(x) XSTR(x)
 #include STR(DEMO_NAME.hpp)

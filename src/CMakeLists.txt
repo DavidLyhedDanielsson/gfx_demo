@@ -73,13 +73,13 @@ set(SRC_DX
 list(TRANSFORM SRC_DX PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/graphics/dx12/)
 
 function(create_demo DEMO_NAME)
-    if(NOT ARGN)
-        set("NONE" ARGN)
+    if(ARGC EQUAL 1)
+        set(ARGN "NONE")
     endif()
 
     foreach(VARIANT ${ARGN})
         set(SOURCE_FILE_NAME ${DEMO_NAME})
-        if(VARIANT EQUAL "NONE")
+        if(VARIANT STREQUAL "NONE")
             set(EXECUTABLE_NAME ${DEMO_NAME})
         else()
             string(TOLOWER ${DEMO_NAME}_${VARIANT} EXECUTABLE_NAME)
