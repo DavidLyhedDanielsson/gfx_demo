@@ -35,7 +35,7 @@ out exactly how the technique is implemented.
 |cubed_cat|<img align="left" src="data/demo_screenshot/cubed_cat.webp" width=200>| Builds on top of perspective_cat by making the quad a cube |
 |placed_cat|<img align="left" src="data/demo_screenshot/cubed_cat.webp" width=200>| Builds on top of cubed_cat by using placed resources instead of committed resources |
 |normal_mapping|<img align="left" src="data/demo_screenshot/normal_mapping.webp" width=200>| Builds on top of cubed_cat by adding adding multiple things: normal mapping, assimp for asset loading, a counter to dynamically calculate buffer offsets, and Phong lighting. Comes in two variants: _world space_ and _tangent space_ which showcase the difference between lighting calculations in each space |
-|normal_mapping|<img align="left" src="data/demo_screenshot/timing.webp" width=200>| Builds on top of normal_mapping_tangent_space by adding GPU timestamp queries. Also adds simple CPU timing for completeness. The time is displayed in the window title |
+|timing|<img align="left" src="data/demo_screenshot/timing.webp" width=200>| Builds on top of normal_mapping_tangent_space by adding GPU timestamp queries. Also adds simple CPU timing for completeness. The time is displayed in the window title |
 
 ## Attribution
 
