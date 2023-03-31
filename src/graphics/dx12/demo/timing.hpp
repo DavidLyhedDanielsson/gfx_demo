@@ -5,6 +5,8 @@
 #include <numeric>
 
 #include <graphics/dx12/versioning.hpp>
+#include <util/align.hpp>
+#include <util/offset_counter.hpp>
 
 #include <DirectXMath.h>
 #include <SimpleMath.h>
@@ -31,50 +33,6 @@ namespace DEMO_NAME
         DirectX::SimpleMath::Vector2 uv;
         DirectX::SimpleMath::Vector3 normal;
         DirectX::SimpleMath::Vector3 tangent;
-    };
-
-    inline uint32_t AlignTo(uint32_t val, uint32_t alignment)
-    {
-        assert(std::popcount(alignment) == 1); // Must be power of two
-        return (val + alignment - 1) / alignment * alignment;
-    }
-
-    inline uint32_t AlignTo256(uint32_t val)
-    {
-        return AlignTo(val, 256);
-    }
-
-    struct OffsetCounter
-    {
-        uint32_t offset = 0;
-
-        std::tuple<uint32_t, uint32_t> append(uint32_t size)
-        {
-            auto offsetBefore = std::exchange(offset, offset + size);
-            return std::make_tuple(offsetBefore, size);
-        }
-
-        template<typename T>
-        std::tuple<uint32_t, uint32_t> append(uint32_t count)
-        {
-            auto size = sizeof(T) * count;
-            auto offsetBefore = std::exchange(offset, offset + size);
-            return std::make_tuple(offsetBefore, size);
-        }
-
-        template<typename T>
-        std::tuple<uint32_t, uint32_t> appendAligned(uint32_t count, uint32_t alignment)
-        {
-            auto size = sizeof(T) * count;
-            auto alignedOffset = AlignTo(std::exchange(offset, AlignTo(offset, alignment) + size), alignment);
-            return std::make_tuple(alignedOffset, size);
-        }
-
-        std::tuple<uint32_t, uint32_t> appendAligned(uint32_t size, uint32_t alignment)
-        {
-            auto alignedOffset = AlignTo(std::exchange(offset, AlignTo(offset, alignment) + size), alignment);
-            return std::make_tuple(alignedOffset, size);
-        }
     };
 
     struct State

@@ -4,6 +4,7 @@
 #include <cstdint>
 
 #include <graphics/dx12/versioning.hpp>
+#include <util/align.hpp>
 
 #include <SimpleMath.h>
 
@@ -38,12 +39,6 @@ namespace DEMO_NAME
         0, 2, 3
     });
     // clang-format on
-
-    inline uint32_t AlignTo(uint32_t val, uint32_t alignment)
-    {
-        assert(std::popcount(alignment) == 1); // Must be power of two
-        return (val + alignment - 1) / alignment * alignment;
-    }
 
     struct State
     {

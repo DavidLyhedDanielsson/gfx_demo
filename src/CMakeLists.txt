@@ -58,7 +58,9 @@ endforeach()
 
 # Source code
 set(SRC_UTIL
+    align.hpp
     file_util.cpp file_util.hpp
+    offset_counter.hpp
     path.cpp path.hpp
     stbi.cpp stbi.hpp
 )
