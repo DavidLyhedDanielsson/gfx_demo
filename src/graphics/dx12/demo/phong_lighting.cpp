@@ -84,7 +84,7 @@ namespace DEMO_NAME
             std::tie(c.CBV_TRANSFORM_OFFSET, c.CBV_TRANSFORM_SIZE)       = counter.appendAligned<DirectX::XMFLOAT4X4>(1, 256);
             std::tie(c.CBV_VIEWPROJ_OFFSET, c.CBV_VIEWPROJ_SIZE)         = counter.appendAligned<DirectX::XMFLOAT4X4>(1, 256);
             std::tie(c.TEXTURE_DIFFUSE_OFFSET, c.TEXTURE_DIFFUSE_SIZE)   = counter.appendAligned(AlignTo(TEXTURE_WIDTH * TEXTURE_CHANNELS, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
-            std::tie(c.TEXTURE_AMBIENT_OFFSET, c.TEXTURE_AMBIENT_SIZE)     = counter.appendAligned(AlignTo(TEXTURE_WIDTH, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
+            std::tie(c.TEXTURE_AMBIENT_OFFSET, c.TEXTURE_AMBIENT_SIZE)   = counter.appendAligned(AlignTo(TEXTURE_WIDTH, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
             std::tie(c.UPLOAD_BUFFER_SIZE, std::ignore) = counter.append(0);
             // clang-format on
         }

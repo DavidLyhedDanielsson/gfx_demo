@@ -194,7 +194,7 @@ namespace DEMO_NAME
                 std::memcpy(
                     textureData.data() + textureRowPitch * i,
                     stbiData.get() + TEXTURE_WIDTH * 4 * i,
-                    TEXTURE_HEIGHT * 4);
+                    TEXTURE_WIDTH * 4);
         }
 
         {

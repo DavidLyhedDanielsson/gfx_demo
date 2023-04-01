@@ -251,7 +251,7 @@ namespace DEMO_NAME
                 std::memcpy(
                     textureDiffuseData.data() + textureRowPitch * i,
                     stbiData.get() + TEXTURE_WIDTH * 4 * i,
-                    TEXTURE_HEIGHT * 4);
+                    TEXTURE_WIDTH * 4);
         }
 
         std::vector<char> textureNormalData;
@@ -290,7 +290,7 @@ namespace DEMO_NAME
                 std::memcpy(
                     textureNormalData.data() + textureRowPitch * i,
                     stbiData.get() + TEXTURE_WIDTH * 4 * i,
-                    TEXTURE_HEIGHT * 4);
+                    TEXTURE_WIDTH * 4);
         }
 
         {
