@@ -34,10 +34,11 @@ out exactly how the technique is implemented.
 |perspective_cat|<img align="left" src="data/demo_screenshot/perspective_cat.webp" width=200>| Builds on top of spinning_cat by adding a perspective projection |
 |cubed_cat|<img align="left" src="data/demo_screenshot/cubed_cat.webp" width=200>| Builds on top of perspective_cat by making the quad a cube |
 |placed_cat|<img align="left" src="data/demo_screenshot/cubed_cat.webp" width=200>| Builds on top of cubed_cat by using placed resources instead of committed resources |
+|phong_lighting|<img align="left" src="data/demo_screenshot/phong_lighting.webp" width=200>| Builds on top of cubed_cat by adding Phong lighting with an ambient occlusion map. A rock texture is used to more easily see the lighting effects, and because Dall-E didn't generate any ambient occlusion maps for the cats :( |
 |normal_mapping|<img align="left" src="data/demo_screenshot/normal_mapping.webp" width=200>| Builds on top of cubed_cat by adding adding multiple things: normal mapping, assimp for asset loading, a counter to dynamically calculate buffer offsets, and Phong lighting. Comes in two variants: _world space_ and _tangent space_ which showcase the difference between lighting calculations in each space |
 |timing|<img align="left" src="data/demo_screenshot/timing.webp" width=200>| Builds on top of normal_mapping_tangent_space by adding GPU timestamp queries. Also adds simple CPU timing for completeness. The time is displayed in the window title |
 
 ## Attribution
 
-Thank you [OpenAI dall-e](https://openai.com/product/dall-e-2) for the cats  
+Thank you [OpenAI DALL-E](https://openai.com/product/dall-e-2) for the cats  
 Thank you Brian from [FreePBR](https://freepbr.com/) for the actual textures
