@@ -86,6 +86,7 @@ namespace DEMO_NAME
             std::tie(c.CBV_TRANSFORM_OFFSET, c.CBV_TRANSFORM_SIZE)       = counter.appendAligned<DirectX::XMFLOAT4X4>(1, 256);
             std::tie(c.CBV_VIEWPROJ_OFFSET, c.CBV_VIEWPROJ_SIZE)         = counter.appendAligned<DirectX::XMFLOAT4X4>(1, 256);
             std::tie(c.TEXTURE_DIFFUSE_OFFSET, c.TEXTURE_DIFFUSE_SIZE)   = counter.appendAligned(AlignTo(TEXTURE_WIDTH * TEXTURE_CHANNELS, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
+            std::tie(c.TEXTURE_AMBIENT_OFFSET, c.TEXTURE_AMBIENT_SIZE)   = counter.appendAligned(AlignTo(TEXTURE_WIDTH, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
             std::tie(c.TEXTURE_NORMAL_OFFSET, c.TEXTURE_NORMAL_SIZE)     = counter.appendAligned(AlignTo(TEXTURE_WIDTH * TEXTURE_CHANNELS, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
             std::tie(c.UPLOAD_BUFFER_SIZE, std::ignore) = counter.append(0);
             // clang-format on
@@ -181,7 +182,7 @@ namespace DEMO_NAME
             Die(device->CreateDescriptorHeap(
                 as_lvalue(D3D12_DESCRIPTOR_HEAP_DESC{
                     .Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-                    .NumDescriptors = 2,
+                    .NumDescriptors = 3,
                     .Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
                     .NodeMask = 0,
                 }),
@@ -248,7 +249,49 @@ namespace DEMO_NAME
                 std::memcpy(
                     textureDiffuseData.data() + textureRowPitch * i,
                     stbiData.get() + TEXTURE_WIDTH * 4 * i,
-                    TEXTURE_HEIGHT * 4);
+                    TEXTURE_WIDTH * 4);
+        }
+
+        uint32_t ambientTextureRowPitch;
+        std::vector<char> textureAmbientData;
+        {
+            auto normalPath = Path::getAssetPath() / "texture" / "jagged-cliff1-ao_low.png";
+
+            // Immediately invoked function expressions (IIFE)
+            const auto stbiData = [&]() {
+                // This scope prevents usage of `width`, `height`, and `channels`
+                int width;
+                int height;
+                int channels;
+
+                // Windows uses wchar in std::filesystem::path >:(
+#ifdef _WIN32
+                char stbiBuf[512];
+                stbi_convert_wchar_to_utf8(stbiBuf, sizeof(stbiBuf), normalPath.c_str());
+
+                auto stbiData = std::unique_ptr<stbi_uc, void (*)(void*)>(
+                    stbi_load(stbiBuf, &width, &height, &channels, STBI_grey), // everything will break if this is
+                                                                               // changed from STBI_grey :)
+                    stbi_image_free);
+#else
+                auto stbiData = std::unique_ptr<stbi_uc, void (*)(void*)>(
+                    stbi_load(catPath.c_str(), &width, &textureHeight, &channels, STBI_rgb_alpha),
+                    stbi_image_free);
+#endif
+                assert(width == TEXTURE_WIDTH);
+                assert(height == TEXTURE_HEIGHT);
+
+                ambientTextureRowPitch = AlignTo(TEXTURE_WIDTH * 1, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
+
+                return stbiData;
+            }();
+
+            textureAmbientData.resize(ambientTextureRowPitch * TEXTURE_HEIGHT);
+            for(uint32_t i = 0; i < TEXTURE_HEIGHT; ++i)
+                std::memcpy(
+                    textureAmbientData.data() + ambientTextureRowPitch * i,
+                    stbiData.get() + TEXTURE_WIDTH * 1 * i,
+                    TEXTURE_WIDTH * 1);
         }
 
         std::vector<char> textureNormalData;
@@ -287,7 +330,7 @@ namespace DEMO_NAME
                 std::memcpy(
                     textureNormalData.data() + textureRowPitch * i,
                     stbiData.get() + TEXTURE_WIDTH * 4 * i,
-                    TEXTURE_HEIGHT * 4);
+                    TEXTURE_WIDTH * 4);
         }
 
         {
@@ -516,6 +559,35 @@ namespace DEMO_NAME
                     .Height = TEXTURE_HEIGHT,
                     .DepthOrArraySize = 1, // Mandatory
                     .MipLevels = 1,
+                    .Format = DXGI_FORMAT_R8_UNORM,
+                    .SampleDesc =
+                        {
+                            .Count = 1, // Mandatory
+                            .Quality = 0, // Mandatory
+                        },
+                    .Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN, // Mandatory
+                    .Flags = D3D12_RESOURCE_FLAG_NONE,
+                }),
+                D3D12_RESOURCE_STATE_COMMON,
+                nullptr,
+                Out(state.resources.textureAmbient));
+            device->CreateCommittedResource(
+                as_lvalue(D3D12_HEAP_PROPERTIES{
+                    .Type = D3D12_HEAP_TYPE_DEFAULT,
+                    .CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN, // Mandatory
+                    .MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN, // Mandatory
+                    .CreationNodeMask = 0,
+                    .VisibleNodeMask = 0,
+                }),
+                D3D12_HEAP_FLAG_NONE,
+                as_lvalue(D3D12_RESOURCE_DESC{
+                    .Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D,
+                    .Alignment =
+                        0, // https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc#alignment
+                    .Width = TEXTURE_WIDTH,
+                    .Height = TEXTURE_HEIGHT,
+                    .DepthOrArraySize = 1, // Mandatory
+                    .MipLevels = 1,
                     .Format = DXGI_FORMAT_R8G8B8A8_UNORM,
                     .SampleDesc =
                         {
@@ -533,6 +605,9 @@ namespace DEMO_NAME
         {
             auto handle = state.heaps.srv->GetCPUDescriptorHandleForHeapStart();
             device->CreateShaderResourceView(state.resources.textureDiffuse.Get(), nullptr, handle);
+
+            handle.ptr += state.descriptorSizes.srv;
+            device->CreateShaderResourceView(state.resources.textureAmbient.Get(), nullptr, handle);
 
             handle.ptr += state.descriptorSizes.srv;
             device->CreateShaderResourceView(state.resources.textureNormal.Get(), nullptr, handle);
@@ -596,6 +671,10 @@ namespace DEMO_NAME
                 (char*)uploadBufferDataPointer + state.constants.TEXTURE_DIFFUSE_OFFSET,
                 textureDiffuseData.data(),
                 state.constants.TEXTURE_DIFFUSE_SIZE);
+            std::memcpy(
+                (char*)uploadBufferDataPointer + state.constants.TEXTURE_AMBIENT_OFFSET,
+                textureAmbientData.data(),
+                state.constants.TEXTURE_AMBIENT_SIZE);
             std::memcpy(
                 (char*)uploadBufferDataPointer + state.constants.TEXTURE_NORMAL_OFFSET,
                 textureNormalData.data(),
@@ -674,6 +753,31 @@ namespace DEMO_NAME
                 nullptr);
             state.commandList->CopyTextureRegion(
                 as_lvalue(D3D12_TEXTURE_COPY_LOCATION{
+                    .pResource = state.resources.textureAmbient.Get(),
+                    .Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX,
+                    .SubresourceIndex = 0,
+                }),
+                0,
+                0,
+                0,
+                as_lvalue(D3D12_TEXTURE_COPY_LOCATION{
+                    .pResource = state.resources.uploadBuffer.Get(),
+                    .Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT,
+                    .PlacedFootprint =
+                        D3D12_PLACED_SUBRESOURCE_FOOTPRINT{
+                            .Offset = state.constants.TEXTURE_AMBIENT_OFFSET,
+                            .Footprint =
+                                D3D12_SUBRESOURCE_FOOTPRINT{
+                                    .Format = DXGI_FORMAT_R8_UNORM,
+                                    .Width = TEXTURE_WIDTH,
+                                    .Height = TEXTURE_HEIGHT,
+                                    .Depth = 1,
+                                    .RowPitch = ambientTextureRowPitch,
+                                },
+                        }}),
+                nullptr);
+            state.commandList->CopyTextureRegion(
+                as_lvalue(D3D12_TEXTURE_COPY_LOCATION{
                     .pResource = state.resources.textureNormal.Get(),
                     .Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX,
                     .SubresourceIndex = 0,
@@ -706,6 +810,17 @@ namespace DEMO_NAME
                     .Transition =
                         {
                             .pResource = state.resources.textureDiffuse.Get(),
+                            .Subresource = 0,
+                            .StateBefore = D3D12_RESOURCE_STATE_COPY_DEST,
+                            .StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+                        },
+                },
+                D3D12_RESOURCE_BARRIER{
+                    .Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+                    .Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE,
+                    .Transition =
+                        {
+                            .pResource = state.resources.textureAmbient.Get(),
                             .Subresource = 0,
                             .StateBefore = D3D12_RESOURCE_STATE_COPY_DEST,
                             .StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
@@ -753,7 +868,7 @@ namespace DEMO_NAME
                             .NumDescriptorRanges = 1,
                             .pDescriptorRanges = as_lvalue(D3D12_DESCRIPTOR_RANGE{
                                 .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
-                                .NumDescriptors = 2,
+                                .NumDescriptors = 3,
                                 .BaseShaderRegister = 0,
                                 .RegisterSpace = 0,
                                 .OffsetInDescriptorsFromTableStart = 0,
