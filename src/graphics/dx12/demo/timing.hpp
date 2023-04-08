@@ -85,6 +85,7 @@ namespace DEMO_NAME
             ID3D12ResourceS vertexTangentBuffer;
             ID3D12ResourceS indexBuffer;
             ID3D12ResourceS textureDiffuse;
+            ID3D12ResourceS textureAmbient;
             ID3D12ResourceS textureNormal;
         } resources;
 
@@ -112,6 +113,8 @@ namespace DEMO_NAME
             uint32_t CBV_VIEWPROJ_SIZE = -1;
             uint32_t TEXTURE_DIFFUSE_OFFSET = -1;
             uint32_t TEXTURE_DIFFUSE_SIZE = -1;
+            uint32_t TEXTURE_AMBIENT_OFFSET = -1;
+            uint32_t TEXTURE_AMBIENT_SIZE = -1;
             uint32_t TEXTURE_NORMAL_OFFSET = -1;
             uint32_t TEXTURE_NORMAL_SIZE = -1;
             uint32_t UPLOAD_BUFFER_SIZE = -1;
