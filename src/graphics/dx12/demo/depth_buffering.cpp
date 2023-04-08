@@ -916,6 +916,13 @@ namespace DEMO_NAME
         }
 
         {
+            std::array descriptorTableRanges = std::to_array({D3D12_DESCRIPTOR_RANGE{
+                .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
+                .NumDescriptors = 3,
+                .BaseShaderRegister = 0,
+                .RegisterSpace = 0,
+                .OffsetInDescriptorsFromTableStart = 0,
+            }});
             std::array rootParameters = std::to_array({
                 D3D12_ROOT_PARAMETER{
                     .ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV,
@@ -939,14 +946,9 @@ namespace DEMO_NAME
                     .ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE,
                     .DescriptorTable =
                         D3D12_ROOT_DESCRIPTOR_TABLE{
-                            .NumDescriptorRanges = 1,
-                            .pDescriptorRanges = as_lvalue(D3D12_DESCRIPTOR_RANGE{
-                                .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
-                                .NumDescriptors = 3,
-                                .BaseShaderRegister = 0,
-                                .RegisterSpace = 0,
-                                .OffsetInDescriptorsFromTableStart = 0,
-                            })},
+                            .NumDescriptorRanges = descriptorTableRanges.size(),
+                            .pDescriptorRanges = descriptorTableRanges.data(),
+                        },
                     .ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL,
                 },
             });
