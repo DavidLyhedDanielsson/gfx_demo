@@ -83,7 +83,7 @@ namespace DEMO_NAME
             std::tie(c.INDEX_OFFSET, c.INDEX_SIZE)                       = counter.append<DirectX::XMFLOAT2>(indexData.size());
             std::tie(c.CBV_TRANSFORM_OFFSET, c.CBV_TRANSFORM_SIZE)       = counter.appendAligned<DirectX::XMFLOAT4X4>(1, 256);
             std::tie(c.CBV_VIEWPROJ_OFFSET, c.CBV_VIEWPROJ_SIZE)         = counter.appendAligned<DirectX::XMFLOAT4X4>(1, 256);
-            std::tie(c.TEXTURE_DIFFUSE_OFFSET, c.TEXTURE_DIFFUSE_SIZE)   = counter.appendAligned(AlignTo(TEXTURE_WIDTH * TEXTURE_CHANNELS, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
+            std::tie(c.TEXTURE_ALBEDO_OFFSET, c.TEXTURE_ALBEDO_SIZE)   = counter.appendAligned(AlignTo(TEXTURE_WIDTH * TEXTURE_CHANNELS, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
             std::tie(c.TEXTURE_AMBIENT_OFFSET, c.TEXTURE_AMBIENT_SIZE)   = counter.appendAligned(AlignTo(TEXTURE_WIDTH, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * TEXTURE_HEIGHT, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
             std::tie(c.UPLOAD_BUFFER_SIZE, std::ignore) = counter.append(0);
             // clang-format on
@@ -208,9 +208,9 @@ namespace DEMO_NAME
         }
 
         uint32_t textureRowPitch;
-        std::vector<char> textureDiffuseData;
+        std::vector<char> textureAlbedoData;
         {
-            auto diffusePath = Path::getAssetPath() / "texture" / "jagged-cliff1-albedo_low.png";
+            auto albedoPath = Path::getAssetPath() / "texture" / "jagged-cliff1-albedo_low.png";
 
             // Immediately invoked function expressions (IIFE)
             const auto stbiData = [&]() {
@@ -222,7 +222,7 @@ namespace DEMO_NAME
                 // Windows uses wchar in std::filesystem::path >:(
 #ifdef _WIN32
                 char stbiBuf[512];
-                stbi_convert_wchar_to_utf8(stbiBuf, sizeof(stbiBuf), diffusePath.c_str());
+                stbi_convert_wchar_to_utf8(stbiBuf, sizeof(stbiBuf), albedoPath.c_str());
 
                 auto stbiData = std::unique_ptr<stbi_uc, void (*)(void*)>(
                     stbi_load(stbiBuf, &width, &height, &channels, STBI_rgb_alpha), // everything will break if this is
@@ -241,10 +241,10 @@ namespace DEMO_NAME
 
             textureRowPitch = AlignTo(TEXTURE_WIDTH * 4, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
 
-            textureDiffuseData.resize(textureRowPitch * TEXTURE_HEIGHT);
+            textureAlbedoData.resize(textureRowPitch * TEXTURE_HEIGHT);
             for(uint32_t i = 0; i < TEXTURE_HEIGHT; ++i)
                 std::memcpy(
-                    textureDiffuseData.data() + textureRowPitch * i,
+                    textureAlbedoData.data() + textureRowPitch * i,
                     stbiData.get() + TEXTURE_WIDTH * 4 * i,
                     TEXTURE_WIDTH * 4);
         }
@@ -470,7 +470,7 @@ namespace DEMO_NAME
                 }),
                 D3D12_RESOURCE_STATE_COMMON,
                 nullptr,
-                Out(state.resources.textureDiffuse));
+                Out(state.resources.textureAlbedo));
             device->CreateCommittedResource(
                 as_lvalue(D3D12_HEAP_PROPERTIES{
                     .Type = D3D12_HEAP_TYPE_DEFAULT,
@@ -504,7 +504,7 @@ namespace DEMO_NAME
 
         {
             auto handle = state.heaps.srv->GetCPUDescriptorHandleForHeapStart();
-            device->CreateShaderResourceView(state.resources.textureDiffuse.Get(), nullptr, handle);
+            device->CreateShaderResourceView(state.resources.textureAlbedo.Get(), nullptr, handle);
 
             handle.ptr += state.descriptorSizes.srv;
             device->CreateShaderResourceView(state.resources.textureAmbient.Get(), nullptr, handle);
@@ -560,9 +560,9 @@ namespace DEMO_NAME
                 state.constants.CBV_VIEWPROJ_SIZE);
 
             std::memcpy(
-                (char*)uploadBufferDataPointer + state.constants.TEXTURE_DIFFUSE_OFFSET,
-                textureDiffuseData.data(),
-                state.constants.TEXTURE_DIFFUSE_SIZE);
+                (char*)uploadBufferDataPointer + state.constants.TEXTURE_ALBEDO_OFFSET,
+                textureAlbedoData.data(),
+                state.constants.TEXTURE_ALBEDO_SIZE);
             std::memcpy(
                 (char*)uploadBufferDataPointer + state.constants.TEXTURE_AMBIENT_OFFSET,
                 textureAmbientData.data(),
@@ -610,7 +610,7 @@ namespace DEMO_NAME
                 state.constants.INDEX_SIZE);
             state.commandList->CopyTextureRegion(
                 as_lvalue(D3D12_TEXTURE_COPY_LOCATION{
-                    .pResource = state.resources.textureDiffuse.Get(),
+                    .pResource = state.resources.textureAlbedo.Get(),
                     .Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX,
                     .SubresourceIndex = 0,
                 }),
@@ -622,7 +622,7 @@ namespace DEMO_NAME
                     .Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT,
                     .PlacedFootprint =
                         D3D12_PLACED_SUBRESOURCE_FOOTPRINT{
-                            .Offset = state.constants.TEXTURE_DIFFUSE_OFFSET,
+                            .Offset = state.constants.TEXTURE_ALBEDO_OFFSET,
                             .Footprint =
                                 D3D12_SUBRESOURCE_FOOTPRINT{
                                     .Format = DXGI_FORMAT_R8G8B8A8_UNORM,
@@ -666,7 +666,7 @@ namespace DEMO_NAME
                     .Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE,
                     .Transition =
                         {
-                            .pResource = state.resources.textureDiffuse.Get(),
+                            .pResource = state.resources.textureAlbedo.Get(),
                             .Subresource = 0,
                             .StateBefore = D3D12_RESOURCE_STATE_COPY_DEST,
                             .StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,

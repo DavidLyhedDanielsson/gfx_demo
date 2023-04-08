@@ -21,10 +21,10 @@ float4 main(Input input) : SV_Target {
     float3 viewDir = normalize(input.viewPosTangent - input.pixelPosTangent);
 
     float ambientStrength = ambientFactor * ambient.Sample(samp, input.uv).r;
-    float diffuseStrength = max(dot(normalTangent, lightDir), 0.0f);
+    float albedoStrength = max(dot(normalTangent, lightDir), 0.0f);
     float3 reflected = reflect(-lightDir, normalTangent); // `reflect` wants an incident ray
     float specularStrength = pow(max(dot(viewDir, reflected), 0.0f), 32.0f) * 0.1f;
 
     float3 albedoColour = albedo.Sample(samp, input.uv).rgb;
-    return float4(albedoColour * (ambientStrength + diffuseStrength) + specularStrength, 0.0f);
+    return float4(albedoColour * (ambientStrength + albedoStrength) + specularStrength, 0.0f);
 }
