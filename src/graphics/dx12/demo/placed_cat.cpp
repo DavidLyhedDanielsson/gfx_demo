@@ -40,12 +40,12 @@ namespace DEMO_NAME
         IDXGIFactoryS dxgiFactory;
 
         UINT factoryFlags = 0;
-#ifndef NDEBUG
+#ifdef DEBUG
         factoryFlags |= DXGI_CREATE_FACTORY_DEBUG;
 #endif
         Die(CreateDXGIFactory2(factoryFlags, Out(dxgiFactory)));
 
-#ifndef NDEBUG
+#ifdef DEBUG
         ID3D12DebugS debug;
         Die(D3D12GetDebugInterface(Out(debug)));
         debug->EnableDebugLayer();

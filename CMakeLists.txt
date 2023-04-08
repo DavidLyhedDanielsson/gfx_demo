@@ -17,6 +17,8 @@ if(WIN32)
     add_compile_definitions(-DNOMINMAX -DSTBI_NO_SIMD)
 endif()
 
+add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
+
 # Runtime
 find_package(SDL2 CONFIG REQUIRED)
 find_package(assimp CONFIG REQUIRED)
