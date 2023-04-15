@@ -39,6 +39,7 @@ out exactly how the technique is implemented.
 |timing|<img align="left" src="data/demo_screenshot/timing.webp" width=200>| Builds on top of normal_mapping_tangent_space by adding GPU timestamp queries. Also adds simple CPU timing for completeness. The time is displayed in the window title |
 |depth_buffering|<img align="left" src="data/demo_screenshot/depth_buffering.webp" width=200>| Builds on top of normal_mapping_tangent_space by adding another cube and a depth buffer so the cubes aren't drawn on top of each other |
 |multisampling|<img align="left" src="data/demo_screenshot/multisampling.webp" width=200>| Builds on top of depth_buffering by enabling multisampling |
+|resizing|<img align="left" src="data/demo_screenshot/multisampling.webp" width=200>| Builds on top of multisampling by making the window resizable |
 
 ## Attribution
 

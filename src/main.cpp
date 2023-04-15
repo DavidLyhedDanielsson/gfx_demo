@@ -24,11 +24,21 @@ int main(int argc, char** argv)
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
         return 1;
 
-    const uint32_t windowWidth = 1280;
-    const uint32_t windowHeight = 720;
+    uint32_t windowWidth = 1280;
+    uint32_t windowHeight = 720;
 
-    SDL_Window* sdlWindow =
-        SDL_CreateWindow("Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, 0);
+    uint32_t sdlWindowFlags = 0;
+#ifdef DEMO_NAME_RESIZING
+    sdlWindowFlags |= SDL_WINDOW_RESIZABLE;
+#endif
+
+    SDL_Window* sdlWindow = SDL_CreateWindow(
+        "Window",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        windowWidth,
+        windowHeight,
+        sdlWindowFlags);
 
     SDL_SysWMinfo wmInfo;
     SDL_VERSION(&wmInfo.version)
@@ -77,24 +87,43 @@ int main(int argc, char** argv)
         accumulatedCpuTime += frameTimeMS.count();
         ++accumulatedIterations;
 
-        SDL_Event event;
-        while(SDL_PollEvent(&event))
-        {
-            if(event.type == SDL_QUIT)
-            {
-                running = false;
-                break;
-            }
+        // This is only acted on in certain demos, but I don't want to clutter the code with ifdefs
+        std::optional<std::pair<uint32_t, uint32_t>> newDimensions;
 
-            if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
+        SDL_Event event;
+        while(SDL_PollEvent(&event) && running)
+        {
+            switch(event.type)
             {
-                running = false;
-                break;
+                case SDL_QUIT: running = false; break;
+                case SDL_KEYDOWN: {
+                    if(event.key.keysym.sym == SDLK_ESCAPE)
+                        running = false;
+                    break;
+                }
+                case SDL_WINDOWEVENT: {
+                    if(event.window.event == SDL_WINDOWEVENT_RESIZED && event.window.data1 > 0
+                       && event.window.data2 > 0)
+                    {
+                        newDimensions = {event.window.data1, event.window.data2};
+                    }
+                    break;
+                }
+                default: break;
             }
         }
 
         if(!running)
             break;
+
+#ifdef DEMO_NAME_RESIZING
+        if(newDimensions)
+        {
+            std::tie(windowWidth, windowHeight) = newDimensions.value();
+            dx12_demo::DEMO_NAME::resize(wmInfo.info.win.window, windowWidth, windowHeight);
+            continue;
+        }
+#endif
 
         dx12_demo::DEMO_NAME::render(windowWidth, windowHeight);
 #ifdef DEMO_NAME_TIMING
