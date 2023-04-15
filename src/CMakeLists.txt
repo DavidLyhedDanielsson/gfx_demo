@@ -116,7 +116,7 @@ function(create_demo DEMO_NAME)
             SDL2::SDL2 SDL2::SDL2main
             EnTT::EnTT
             assimp::assimp
-            d3d12.lib dxgi.lib d3dcompiler.lib
+            d3d12.lib dxgi.lib dxguid.lib d3dcompiler.lib
             Microsoft::DirectX-Guids Microsoft::DirectX-Headers Microsoft::DirectXTK12
         )
     endforeach()
