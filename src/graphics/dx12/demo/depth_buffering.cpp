@@ -900,17 +900,6 @@ namespace DEMO_NAME
                             .StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
                         },
                 },
-                D3D12_RESOURCE_BARRIER{
-                    .Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
-                    .Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE,
-                    .Transition =
-                        {
-                            .pResource = state.resources.vertexPositionBuffer.Get(),
-                            .Subresource = 0,
-                            .StateBefore = D3D12_RESOURCE_STATE_COPY_DEST,
-                            .StateAfter = D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
-                        },
-                },
             });
             state.commandList->ResourceBarrier(barriers.size(), barriers.data());
         }

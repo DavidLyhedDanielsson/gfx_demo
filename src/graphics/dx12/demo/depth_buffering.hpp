@@ -2,7 +2,6 @@
 
 #include <array>
 #include <cstdint>
-#include <dxgiformat.h>
 #include <numeric>
 
 #include <graphics/dx12/versioning.hpp>
